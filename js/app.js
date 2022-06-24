@@ -96,13 +96,13 @@ const categoryApi = {
         renderCategories(
           [
             {
-              name: 'Drogerie'
+              name: "Drogerie",
             },
             {
-              name: 'Lebensmittel'
+              name: "Lebensmittel",
             },
             {
-              name: 'Kleidung'
+              name: "Kleidung",
             },
           ],
           document.getElementsByClassName("navCategories")[0]
@@ -207,10 +207,36 @@ function renderItems(targetId, items) {
   });
 }
 
+function renderStores(targetId, items) {
+  if (!items.length) {
+    document.getElementById(targetId).innerHTML = "No Products available.";
+    return;
+  }
+  items.forEach((item) => {
+    const template = `
+              <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;">
+                <div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;">
+                  <div class="store-card-banner" style="background: url('${item.banner_image.image_url}?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
+                </div>
+              </div>
+              `;
+
+    let component = document.createElement("div");
+    component.innerHTML = template;
+    component.classList.add("store-list-item");
+
+    document.getElementById(targetId).appendChild(component);
+    linkListener();
+  });
+}
+
 const templates = [
   {
     name: "index",
     init: () => {
+      api("mylokals/v1/stores?location=41352").then((res) => {
+        renderStores("stores", res.data.stores);
+      });
       categoryApi
         .fetchCategory("baby", {
           limit: 10,
@@ -219,80 +245,91 @@ const templates = [
           renderItems("items", res.data.products);
         });
 
-        const addMarkers = () => {
-      const markers = [
-        {
-          id: 1,
-          coordinates: [6.551865, 51.188353]
-        }
-      ]
-      
-      markers.reverse().forEach(marker => {
-        if (!document.getElementById('map_marker_' + marker.id)) {
-          if (marker.coordinates && typeof marker.coordinates[0] === 'number' && typeof marker.coordinates[1] === 'number') {
-            const el_wrapper = document.createElement('div');
-            el_wrapper.className = 'marker-wrapper';
-            el_wrapper.setAttribute("id", 'map_marker_' + marker.id);
+      const addMarkers = () => {
+        const markers = [
+          {
+            id: 1,
+            coordinates: [6.551865, 51.188353],
+          },
+        ];
 
-            const el_marker = document.createElement('div');
-            el_marker.className = ['marker', !marker.approved && markers.length > 30 ? 'marker--secondary' : '', `marker--${marker.type}`].join(' ');
+        markers.reverse().forEach((marker) => {
+          if (!document.getElementById("map_marker_" + marker.id)) {
+            if (
+              marker.coordinates &&
+              typeof marker.coordinates[0] === "number" &&
+              typeof marker.coordinates[1] === "number"
+            ) {
+              const el_wrapper = document.createElement("div");
+              el_wrapper.className = "marker-wrapper";
+              el_wrapper.setAttribute("id", "map_marker_" + marker.id);
 
-            const el_icon = document.createElement('div');
-            el_icon.className = 'marker-icon';
-            el_marker.appendChild(el_icon)
+              const el_marker = document.createElement("div");
+              el_marker.className = [
+                "marker",
+                !marker.approved && markers.length > 30
+                  ? "marker--secondary"
+                  : "",
+                `marker--${marker.type}`,
+              ].join(" ");
 
-            el_wrapper.appendChild(el_marker)
+              const el_icon = document.createElement("div");
+              el_icon.className = "marker-icon";
+              el_marker.appendChild(el_icon);
 
+              el_wrapper.appendChild(el_marker);
 
+              const store_banner = document.createElement("img");
+              store_banner.className = "marker-store-preview-banner";
+              store_banner.src = marker.preview_image_url;
 
-            const store_banner = document.createElement('img')
-            store_banner.className = 'marker-store-preview-banner';
-            store_banner.src = marker.preview_image_url
+              const store_name = document.createElement("div");
+              store_name.className = "headline headline--xs";
+              store_name.src = marker.preview_image_url;
+              const store_name_text = document.createTextNode(marker.name);
+              store_name.appendChild(store_name_text);
 
-            const store_name = document.createElement('div')
-            store_name.className = 'headline headline--xs';
-            store_name.src = marker.preview_image_url
-            const store_name_text = document.createTextNode(marker.name);
-            store_name.appendChild(store_name_text)
+              const store_preview = document.createElement("div");
+              store_preview.className = "marker-store-preview";
+              store_preview.appendChild(store_banner);
+              store_preview.appendChild(store_name);
+              store_preview.addEventListener("click", () => {
+                //vm.$router.push({name:'store',params:{store_id:marker.key},query:{...vm.$route.query,map:null}})
+              });
 
-            const store_preview = document.createElement('div');
-            store_preview.className = 'marker-store-preview';
-            store_preview.appendChild(store_banner)
-            store_preview.appendChild(store_name)
-            store_preview.addEventListener("click", () => {
-              //vm.$router.push({name:'store',params:{store_id:marker.key},query:{...vm.$route.query,map:null}})
-            });
-            
-            el_wrapper.appendChild(store_preview)
+              el_wrapper.appendChild(store_preview);
 
-            function clickMarker(event) {
-              // document.getElementById('map_marker_' + marker.id).classList.add("is-active")
-              // vm.$emit('update', {
-              //   id: marker.id,
-              //   type: marker.type,
-              //   coordinates: marker.coordinates
-              // })
+              function clickMarker(event) {
+                // document.getElementById('map_marker_' + marker.id).classList.add("is-active")
+                // vm.$emit('update', {
+                //   id: marker.id,
+                //   type: marker.type,
+                //   coordinates: marker.coordinates
+                // })
+              }
+
+              el_wrapper.addEventListener("click", clickMarker);
+
+              const new_marker = new mapboxgl.Marker(el_wrapper)
+                .setLngLat(marker.coordinates)
+                .addTo(window.map);
+              //vm.markers_on_map.push(new_marker)
             }
-
-            el_wrapper.addEventListener("click", clickMarker);
-
-            const new_marker = new mapboxgl.Marker(el_wrapper).setLngLat(marker.coordinates).addTo(window.map);
-            //vm.markers_on_map.push(new_marker)
           }
-        }
-      })
-    }
+        });
+      };
 
-    mapboxgl.accessToken = "pk.eyJ1Ijoiam9lbmFzam8iLCJhIjoiY2o2M3k2NW96MWdpcTJybndtbmQ2aWtpYyJ9.9f0O8JplL4G6An4-ci8dQw";
-    const map = new mapboxgl.Map({
-      container: 'map', // container ID
-      style: 'mapbox://styles/joenasjo/cjyfyl58q00rh1cs2gvz12lfn', // style URL
-      center: [6.551865, 51.188353], // starting position [lng, lat]
-      zoom: 11 // starting zoom
-    });
-    window.map = map
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoiam9lbmFzam8iLCJhIjoiY2o2M3k2NW96MWdpcTJybndtbmQ2aWtpYyJ9.9f0O8JplL4G6An4-ci8dQw";
+      const map = new mapboxgl.Map({
+        container: "map", // container ID
+        style: "mapbox://styles/joenasjo/cjyfyl58q00rh1cs2gvz12lfn", // style URL
+        center: [6.551865, 51.188353], // starting position [lng, lat]
+        zoom: 11, // starting zoom
+      });
+      window.map = map;
 
-    addMarkers()
+      addMarkers();
     },
     template: `
 				<div class="banner" style="display: flex;align-items: center;justify-content: center;">
@@ -303,17 +340,7 @@ const templates = [
 			    	<div>
 			    		<div class="headline text-center">Titel</div>
 			    	</div>
-            <div class="store-list">
-              <div class="store-list-item">
-                <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;"><div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;"><div class="store-card-banner" style="background: url(&quot;https://api.mylokals.de/api/v1/images/61333f5373221b71f7fac992/2021-09-15/12401cdae14f40bc21daab934c446fe32fc6dc66a5f42326.jpeg?height=216&amp;size=2&quot;) center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"><!----></div> <!----> <!----></div></div>
-              </div>
-              <div class="store-list-item">
-                <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;"><div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;"><div class="store-card-banner" style="background: url(&quot;https://api.mylokals.de/api/v1/images/61333f5373221b71f7fac992/2021-09-15/12401cdae14f40bc21daab934c446fe32fc6dc66a5f42326.jpeg?height=216&amp;size=2&quot;) center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"><!----></div> <!----> <!----></div></div>
-              </div>
-              <div class="store-list-item">
-                <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;"><div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;"><div class="store-card-banner" style="background: url(&quot;https://api.mylokals.de/api/v1/images/61333f5373221b71f7fac992/2021-09-15/12401cdae14f40bc21daab934c446fe32fc6dc66a5f42326.jpeg?height=216&amp;size=2&quot;) center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"><!----></div> <!----> <!----></div></div>
-              </div>
-            </div>
+            <div class="store-list" id="stores"></div>
             <div style="margin-top: 2rem;">
               <div class="headline text-center">Grevenbroich liefert</div>
             </div>
