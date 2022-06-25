@@ -133,6 +133,7 @@ const basketApi = {
         window.$store.basket = res.data;
         document.getElementById("basketItemCount").innerHTML =
           res.data.quantity_count;
+        renderBasketItems(res.data.items, "floatingBasketItems");
         resolve(res.data);
       });
     });
@@ -150,6 +151,7 @@ const basketApi = {
         window.$store.basket.id = json.id;
         document.getElementById("basketItemCount").innerHTML =
           json.quantity_count;
+        renderBasketItems(json.items, "floatingBasketItems");
       }
     };
 
@@ -169,6 +171,7 @@ const basketApi = {
         },
       }).then((res) => {
         window.$store.basket = res.data;
+        renderBasketItems(res.data.items, "floatingBasketItems");
         resolve(res);
       });
     });
@@ -191,10 +194,10 @@ function renderItems(targetId, items) {
 				    	<a class="prdct-itm" route="/product/${item.key}">
 				    		<div class="prdct-itm_img">
 				    			<img src="${preview_image}?height=330&width=310&size=1"/>
+                  <a class="prdct-itm_cart-btn button btn-s" href="https://twitter.com/jonasatia" target="_blank" rel="noopener">+</a>
 				    		</div>
 				    		<div>${item.name}</div>
 				    		<div>${item._priceWithTax}</div>
-				    		<!--<div class="flex justify-center"><a class="prdct-itm_cart-btn button btn-s" href="https://twitter.com/jonasatia" target="_blank" rel="noopener">Add to cart</a></div>-->
 				    	</a>
 				      `;
 
@@ -206,7 +209,6 @@ function renderItems(targetId, items) {
     linkListener();
   });
 }
-
 function renderStores(targetId, items) {
   if (!items.length) {
     document.getElementById(targetId).innerHTML = "No Products available.";
@@ -214,9 +216,9 @@ function renderStores(targetId, items) {
   }
   items.forEach((item) => {
     const template = `
-              <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;">
+              <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;" route="/store">
                 <div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;">
-                  <div class="store-card-banner" style="background: url('${item.banner_image.image_url}?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
+                  <div class="store-card-banner" style="background: url('${item.bannerUrl}?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
                 </div>
               </div>
               `;
@@ -229,14 +231,50 @@ function renderStores(targetId, items) {
     linkListener();
   });
 }
+function renderBasketItems(items, targetId) {
+        document.getElementById(targetId).innerHTML = "";
+        items.forEach((item) => {
+          const template = `
+                <a class="prdct-itm">
+                  <div class="prdct-itm_img">
+                    <img src="${item.image_url}?height=330&width=310&size=1"/>
+                  </div>
+                  <div class="prdct-itm-details">
+                    <div>${item.variant.name}</div>
+                    <div>${item.quantity > 1 ? item.quantity + " x " : ""} ${
+            item.variant._priceWithTax
+          }</div>
+                    ${
+                      window.$route.config.key !== "checkout"
+                        ? `<div class="button btn-gray btn-xs basket-item-remove">${window.$t(
+                            "component.basket.item.remove"
+                          )}</div>`
+                        : ""
+                    }
+                  </div>
+                </a>
+                `;
+
+          let component = document.createElement("div");
+          component.innerHTML = template;
+          component.classList.add("item");
+          if (window.$route.config.key === "basket") {
+            component
+              .getElementsByClassName("button")[0]
+              .addEventListener("click", () => {
+                basketApi.removeItem(item.id).then(() => {
+                  component.remove();
+                });
+              });
+          }
+          document.getElementById(targetId).appendChild(component);
+        });
+      }
 
 const templates = [
   {
     name: "index",
     init: () => {
-      api("mylokals/v1/stores?location=41352").then((res) => {
-        renderStores("stores", res.data.stores);
-      });
       categoryApi
         .fetchCategory("baby", {
           limit: 10,
@@ -245,14 +283,7 @@ const templates = [
           renderItems("items", res.data.products);
         });
 
-      const addMarkers = () => {
-        const markers = [
-          {
-            id: 1,
-            coordinates: [6.551865, 51.188353],
-          },
-        ];
-
+      const addMarkers = (markers) => {
         markers.reverse().forEach((marker) => {
           if (!document.getElementById("map_marker_" + marker.id)) {
             if (
@@ -329,22 +360,123 @@ const templates = [
       });
       window.map = map;
 
-      addMarkers();
+      // api("mylokals/v1/stores?location=41352").then((res) => {
+        
+      // });
+
+      const stores = [
+        {
+          bannerUrl: "http://localhost:3001/api/v1/images/61333f5373221b71f7fac992/2021-09-04/6ac057f8070ea81d3f417018e6c450672de885fb60c5bc8e.jpeg"
+        },
+        {
+          bannerUrl: "https://api.mylokals.de/api/v1/images/614209a5fa66d79da38ad6e8/2021-09-24/eb46697dda24e67b131c2f1234c4bd9dd6c6f291af2d4f17.jpeg"
+        },
+        {
+          bannerUrl: "https://api.mylokals.de/api/v1/images/61420a26fa66d79da38ad6eb/2021-09-15/8da745f45e31c1b0efddbb6a5969551fd62bb2aef4776ad9.jpeg"
+        }
+      ]
+
+      renderStores("stores", stores);
+      addMarkers([
+        {
+          id: 1,
+          coordinates: [6.576801, 51.165982],
+        },
+        {
+        id: 2,
+        coordinates: [6.578233, 51.165589],
+      },
+      {
+        id: 3,
+        coordinates: [6.513069, 51.190269],
+      }
+      ]);
     },
     template: `
-				<div class="banner" style="display: flex;align-items: center;justify-content: center;">
-          <!--<div class="headline text-center">Alles aus deiner Umgebung</div>-->
-          <div class="" id='map' style='width: 100%; height: 100%;border-radius: 6px;'></div>
-        </div>
-			    <div class="pt-48">
-			    	<div>
-			    		<div class="headline text-center">Titel</div>
-			    	</div>
-            <div class="store-list" id="stores"></div>
-            <div style="margin-top: 2rem;">
-              <div class="headline text-center">Grevenbroich liefert</div>
+      <div class="container md:flex items-center">
+          <div class="md:w-1/2">
+            <div class="headline text-center" style="text-align: left;font-size: 48px;line-height: 47px;margin-bottom: 0.5rem;">
+              Wir liefern<br>
+              zu dir nach Hause
             </div>
-			    	<div class="prdcts mt-20 view-transition" id="items"></div>
+            <div style="font-size: 24px;margin-bottom: 4rem;">Der Klimafreundliche lokale Lieferdienst</div>
+            <div class="button btn-l">Produkte Suchen</div>
+          </div>
+          <div class="md:w-1/2">
+    				<div class="banner" style="display: flex;align-items: center;justify-content: center;">
+              <div class="" id='map' style='width: 100%; height: 100%;border-radius: 6px;'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+			    <div style="margin-top: 4rem;">
+
+            <div style="background: #FFE26A;padding: 2rem 0;">
+              <div class="container">
+    			    	<div>
+    			    		<div class="headline">Aus deiner Stadt</div>
+    			    	</div>
+                <div class="store-list" id="stores"></div>
+                <div class="button btn-s" style="margin-top: 2rem;">Mehr Geschäfte</div>
+              </div>
+            </div>
+
+            <div class="container" style="margin-top: 4rem;padding: 2rem 0;">
+              <div class="headline text-center" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
+                Das liefern wir                
+              </div>
+              <div style="grid-template-columns: repeat(6, minmax(0, 1fr));gap: 0.75rem;display: grid;">
+                <div>
+                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                  </div>
+                  <div class="text-center">Lebensmittel</div>
+                </div>
+                <div>
+                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                  </div>
+                  <div class="text-center">Drogerieartikel</div>
+                </div>
+                <div>
+                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                  </div>
+                  <div class="text-center">Bücher</div>
+                </div>
+                <div>
+                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                  </div>
+                  <div class="text-center">Fashion</div>
+                </div>
+                <div>
+                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                  </div>
+                  <div class="text-center">Medikamente</div>
+                </div>
+                <div>
+                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                  </div>
+                  <div class="text-center">Und vieles mehr</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 8rem;padding: 8rem 0;">
+              <div class="headline text-center" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
+                Wie funktioniert MyLokals?
+              </div>
+            </div>
+            
+            <div class="container">
+              <div style="margin-top: 8rem;">
+                <div class="headline">Produkte</div>
+              </div>
+  			    	<div class="prdcts mt-20 view-transition" id="items"></div>
+            </div>
 			    </div>
 				`,
   },
@@ -420,6 +552,63 @@ const templates = [
 				    	</div>
 				    </div>
 				`,
+  },
+  {
+    name: "store",
+    init: () => {
+      categoryApi
+        .fetchCategory("baby", {
+          limit: 10,
+        })
+        .then((res) => {
+          renderItems("items", res.data.products);
+        });
+
+      const renderSidebarItems = (items) => {
+          items.forEach((item) => {
+            const template = `<a class="" route="/category/${item.key}">${item.name}</a>`;
+            let component = document.createElement("li");
+            component.innerHTML = template;
+            component.classList.add("item");
+
+            document.getElementById("categoriesSidebar").appendChild(component);
+          });
+        };
+
+        categoryApi.fetchCategories().then((res) => {
+            renderSidebarItems(res.data.categories);
+          });
+    },
+    template: `
+            <div class="container">
+              <div class="flex">
+                <div class="store-list-item" style="width:100%;max-width: 500px;">
+                  <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;" route="/store">
+                    <div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;">
+                      <div class="store-card-banner" style="background: url('http://localhost:3001/api/v1/images/61333f5373221b71f7fac992/2021-09-04/6ac057f8070ea81d3f417018e6c450672de885fb60c5bc8e.jpeg?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-left: 1rem;">
+                  <div class="headline" style="margin-bottom: .5rem;">Buch und Spiel kiste</div>
+                  <div>Bücher, Spielzeug</div>
+                </div>
+              </div>
+
+              <div class="md:flex" style="margin-top: 4rem;">
+                <ul id="categoriesSidebar" style="max-width: 200px;width: 100%;padding-right: 1rem;"></ul>
+                <div>
+                  <div class="w-2/3 md:w-1/2" style="margin-bottom: 1rem;">
+                    <div class="form-field form-field-search">
+                      <input class="form-field-input" name="search" id="search" placeholder="Suche">
+                      <img class="search-icon" src="https://cdn.purdia.com/mylokals/icons/search.svg">
+                    </div>
+                  </div>
+                  <div class="prdcts mt-20 view-transition" id="items"></div>
+                </div>
+              </div>
+            </div>
+        `,
   },
   {
     name: "category",
@@ -594,10 +783,12 @@ const templates = [
       });
     },
     template: `
-				<div class="prdct-view view-transition">
-					<div class="skeleton" id="product-skeleton"></div>
-					<div id="product"></div>
-				</div>
+        <div class="container">
+  				<div class="prdct-view view-transition">
+  					<div class="skeleton" id="product-skeleton"></div>
+  					<div id="product"></div>
+  				</div>
+        </div>
 				`,
   },
   {
@@ -605,54 +796,15 @@ const templates = [
     init: () => {
       const fetchBasket = () => {
         basketApi.fetchBasket().then((basket) => {
-          renderItems(basket.items);
+          renderBasketItems(basket.items, "items");
           if (!basket.items.length) {
             document.getElementById("toCheckoutButton").style.display = "none";
           }
         });
       };
 
-      function renderItems(items) {
-        document.getElementById("items").innerHTML = "";
-        items.forEach((item) => {
-          const template = `
-					    	<a class="prdct-itm">
-					    		<div class="prdct-itm_img">
-					    			<img src="${item.image_url}?height=330&width=310&size=1"/>
-					    		</div>
-					    		<div class="prdct-itm-details">
-					    			<div>${item.variant.name}</div>
-					    			<div>${item.quantity > 1 ? item.quantity + " x " : ""} ${
-            item.variant._priceWithTax
-          }</div>
-					    			${
-                      window.$route.config.key === "basket"
-                        ? `<div class="button btn-gray btn-xs basket-item-remove">${window.$t(
-                            "component.basket.item.remove"
-                          )}</div>`
-                        : ""
-                    }
-					    		</div>
-					    	</a>
-					      `;
-
-          let component = document.createElement("div");
-          component.innerHTML = template;
-          component.classList.add("item");
-          if (window.$route.config.key === "basket") {
-            component
-              .getElementsByClassName("button")[0]
-              .addEventListener("click", () => {
-                basketApi.removeItem(item.id).then(() => {
-                  component.remove();
-                });
-              });
-          }
-          document.getElementById("items").appendChild(component);
-        });
-      }
       if (window.$store.basket.items) {
-        renderItems(window.$store.basket.items);
+        renderBasketItems(window.$store.basket.items, "items");
         fetchBasket();
       } else {
         fetchBasket();
@@ -669,7 +821,7 @@ const templates = [
       }
     },
     template: `
-				    <div class="basket-checkout-view pt-48">
+				    <div class="basket-checkout-view pt-48 container">
 				    	<div>
 				    		<div class="headline">${window.$t("view.basket.title")}</div>
 				    	</div>
@@ -718,6 +870,11 @@ const routes = [
     path: "/account",
     key: "account",
     view: "account",
+  },
+  {
+    path: "/store",
+    key: "store",
+    view: "store",
   },
   {
     path: "/category/:category",
