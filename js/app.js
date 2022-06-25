@@ -267,13 +267,9 @@ function renderBasketItems(items, targetId) {
                     <div>${item.quantity > 1 ? item.quantity + " x " : ""} ${
       item.variant._priceWithTax
     }</div>
-                    ${
-                      window.$route.config.key !== "checkout"
-                        ? `<div class="button btn-gray btn-xs basket-item-remove">${window.$t(
-                            "component.basket.item.remove"
-                          )}</div>`
-                        : ""
-                    }
+                    <div class="button btn-gray btn-xs basket-item-remove">${window.$t(
+                      "component.basket.item.remove"
+                    )}</div>
                   </div>
                 </a>
                 `;
@@ -281,15 +277,15 @@ function renderBasketItems(items, targetId) {
     let component = document.createElement("div");
     component.innerHTML = template;
     component.classList.add("item");
-    if (window.$route.config.key === "basket") {
-      component
-        .getElementsByClassName("button")[0]
-        .addEventListener("click", () => {
-          basketApi.removeItem(item.id).then(() => {
-            component.remove();
-          });
+
+    component
+      .getElementsByClassName("button")[0]
+      .addEventListener("click", () => {
+        basketApi.removeItem(item.id).then(() => {
+          component.remove();
         });
-    }
+      });
+
     document.getElementById(targetId).appendChild(component);
   });
 }

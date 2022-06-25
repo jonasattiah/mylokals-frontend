@@ -104,10 +104,17 @@ function api(url, options = {}) {
         }
       }
 
-      resolve({
-        status: res.status,
-        data: await res.json(),
-      });
+      try {
+        return resolve({
+          status: res.status,
+          data: await res.json(),
+        });
+      } catch {
+        return resolve({
+          status: res.status,
+          data: null,
+        });
+      }
     });
   });
 }
