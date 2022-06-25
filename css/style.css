@@ -64,6 +64,9 @@ body {
   background: var(--body_background);
   margin: 0;
 }
+body .has-cart {
+
+}
 ul {
   list-style: none;
   padding: 0;
@@ -217,7 +220,7 @@ button:disabled {
   width: 75%;
 }
 .categories-sidebar {
-  margin: 3rem -0.5rem 0;
+  margin: 3rem 0 0;
 }
 .categories-sidebar li {
   display: flex;
@@ -262,6 +265,7 @@ button:disabled {
     padding: 0;
     background: #fff;
     color: #1d5ac5;
+    border: 1px solid #fff;
 }
 .product-image-background {
   background: radial-gradient(#fff, #f5f5f5);
@@ -628,12 +632,24 @@ div#card-element {
 }
 .floating-basket .prdct-itm_img {
     max-width: 96px;
+    margin: 0;
 }
 .floating-basket .prdct-itm {
     display: flex;
+    margin-bottom: .5rem;
 }
 .floating-basket .prdct-itm-details {
     margin-left: 0.5rem;
+}
+@media (min-width: 414px) {
+  .category-product-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 601px) {
+  .category-product-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 @media (min-width: 768px) {
   .md\:block {
@@ -658,10 +674,8 @@ div#card-element {
     padding: 0 3px;
     position: absolute;
   }
-  .prdcts {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.75rem;
-    display: grid;
+  .category-product-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .prdcts--list {
     display: block;
@@ -702,6 +716,27 @@ div#card-element {
   .form-card-select {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .category-product-list {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  body .has-cart {
+    padding-right: 398px;
+  }
+  body .has-cart .category-product-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1366px) {
+  body .has-cart .category-product-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1536px) {
+  body .has-cart .category-product-list {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 @media (max-width: 768px) {

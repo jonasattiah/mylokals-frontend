@@ -41,6 +41,26 @@ apiDefaults.headers = {
   Authorization: `Bearer ${window.$store.auth.token}`,
 };
 
+const showFloatingBasket = () => {
+  setCookie("showFloatingBasket", true);
+  document.getElementById("floatingBasketBody").style.display = "block";
+  document.getElementsByClassName("floating-inner")[0].classList.add("card");
+  document.getElementById("body").classList.add("has-cart");
+};
+
+if (getCookie("showFloatingBasket")) showFloatingBasket();
+
+document.getElementById("floatingBasketClose").addEventListener("click", () => {
+  removeCookie("showFloatingBasket");
+  document.getElementById("floatingBasketBody").style.display = "none";
+  document.getElementsByClassName("floating-inner")[0].classList.remove("card");
+  document.getElementById("body").classList.remove("has-cart");
+});
+
+document.getElementById("navItemBasket").addEventListener("click", () => {
+  showFloatingBasket();
+});
+
 const authApi = {
   auth: () => {
     return new Promise((resolve) => {
@@ -133,6 +153,8 @@ const basketApi = {
         window.$store.basket = res.data;
         document.getElementById("basketItemCount").innerHTML =
           res.data.quantity_count;
+        document.getElementById("floatingBasketTotal").innerHTML =
+          res.data._total;
         renderBasketItems(res.data.items, "floatingBasketItems");
         resolve(res.data);
       });
@@ -152,6 +174,7 @@ const basketApi = {
         document.getElementById("basketItemCount").innerHTML =
           json.quantity_count;
         renderBasketItems(json.items, "floatingBasketItems");
+        showFloatingBasket();
       }
     };
 
@@ -232,9 +255,9 @@ function renderStores(targetId, items) {
   });
 }
 function renderBasketItems(items, targetId) {
-        document.getElementById(targetId).innerHTML = "";
-        items.forEach((item) => {
-          const template = `
+  document.getElementById(targetId).innerHTML = "";
+  items.forEach((item) => {
+    const template = `
                 <a class="prdct-itm">
                   <div class="prdct-itm_img">
                     <img src="${item.image_url}?height=330&width=310&size=1"/>
@@ -242,8 +265,8 @@ function renderBasketItems(items, targetId) {
                   <div class="prdct-itm-details">
                     <div>${item.variant.name}</div>
                     <div>${item.quantity > 1 ? item.quantity + " x " : ""} ${
-            item.variant._priceWithTax
-          }</div>
+      item.variant._priceWithTax
+    }</div>
                     ${
                       window.$route.config.key !== "checkout"
                         ? `<div class="button btn-gray btn-xs basket-item-remove">${window.$t(
@@ -255,21 +278,21 @@ function renderBasketItems(items, targetId) {
                 </a>
                 `;
 
-          let component = document.createElement("div");
-          component.innerHTML = template;
-          component.classList.add("item");
-          if (window.$route.config.key === "basket") {
-            component
-              .getElementsByClassName("button")[0]
-              .addEventListener("click", () => {
-                basketApi.removeItem(item.id).then(() => {
-                  component.remove();
-                });
-              });
-          }
-          document.getElementById(targetId).appendChild(component);
+    let component = document.createElement("div");
+    component.innerHTML = template;
+    component.classList.add("item");
+    if (window.$route.config.key === "basket") {
+      component
+        .getElementsByClassName("button")[0]
+        .addEventListener("click", () => {
+          basketApi.removeItem(item.id).then(() => {
+            component.remove();
+          });
         });
-      }
+    }
+    document.getElementById(targetId).appendChild(component);
+  });
+}
 
 const templates = [
   {
@@ -361,20 +384,23 @@ const templates = [
       window.map = map;
 
       // api("mylokals/v1/stores?location=41352").then((res) => {
-        
+
       // });
 
       const stores = [
         {
-          bannerUrl: "http://localhost:3001/api/v1/images/61333f5373221b71f7fac992/2021-09-04/6ac057f8070ea81d3f417018e6c450672de885fb60c5bc8e.jpeg"
+          bannerUrl:
+            "http://localhost:3001/api/v1/images/61333f5373221b71f7fac992/2021-09-04/6ac057f8070ea81d3f417018e6c450672de885fb60c5bc8e.jpeg",
         },
         {
-          bannerUrl: "https://api.mylokals.de/api/v1/images/614209a5fa66d79da38ad6e8/2021-09-24/eb46697dda24e67b131c2f1234c4bd9dd6c6f291af2d4f17.jpeg"
+          bannerUrl:
+            "https://api.mylokals.de/api/v1/images/614209a5fa66d79da38ad6e8/2021-09-24/eb46697dda24e67b131c2f1234c4bd9dd6c6f291af2d4f17.jpeg",
         },
         {
-          bannerUrl: "https://api.mylokals.de/api/v1/images/61420a26fa66d79da38ad6eb/2021-09-15/8da745f45e31c1b0efddbb6a5969551fd62bb2aef4776ad9.jpeg"
-        }
-      ]
+          bannerUrl:
+            "https://api.mylokals.de/api/v1/images/61420a26fa66d79da38ad6eb/2021-09-15/8da745f45e31c1b0efddbb6a5969551fd62bb2aef4776ad9.jpeg",
+        },
+      ];
 
       renderStores("stores", stores);
       addMarkers([
@@ -383,13 +409,13 @@ const templates = [
           coordinates: [6.576801, 51.165982],
         },
         {
-        id: 2,
-        coordinates: [6.578233, 51.165589],
-      },
-      {
-        id: 3,
-        coordinates: [6.513069, 51.190269],
-      }
+          id: 2,
+          coordinates: [6.578233, 51.165589],
+        },
+        {
+          id: 3,
+          coordinates: [6.513069, 51.190269],
+        },
       ]);
     },
     template: `
@@ -565,19 +591,19 @@ const templates = [
         });
 
       const renderSidebarItems = (items) => {
-          items.forEach((item) => {
-            const template = `<a class="" route="/category/${item.key}">${item.name}</a>`;
-            let component = document.createElement("li");
-            component.innerHTML = template;
-            component.classList.add("item");
+        items.forEach((item) => {
+          const template = `<a class="" route="/category/${item.key}">${item.name}</a>`;
+          let component = document.createElement("li");
+          component.innerHTML = template;
+          component.classList.add("item");
 
-            document.getElementById("categoriesSidebar").appendChild(component);
-          });
-        };
+          document.getElementById("categoriesSidebar").appendChild(component);
+        });
+      };
 
-        categoryApi.fetchCategories().then((res) => {
-            renderSidebarItems(res.data.categories);
-          });
+      categoryApi.fetchCategories().then((res) => {
+        renderSidebarItems(res.data.categories);
+      });
     },
     template: `
             <div class="container">
@@ -668,7 +694,7 @@ const templates = [
       });
     },
     template: `
-			    <div class="pt-48 flex">
+			    <div class="pt-48 flex mx-auto container" style="max-width: 1366px;">
 			    	<div class="hidden md:block w-1/4">
 			    		<div class="categories-sidebar">
 				    		<div class="headline">Products</div>
@@ -680,7 +706,7 @@ const templates = [
 				    		<div class="headline">Products</div>
 				    	</div>
 				    	<div class="skeleton" id="items-skeleton"></div>
-				    	<div class="prdcts mt-20 view-transition" id="items">
+				    	<div class="prdcts mt-20 view-transition category-product-list" id="items">
 				    	</div>
 			    	</div>
 			    </div>
