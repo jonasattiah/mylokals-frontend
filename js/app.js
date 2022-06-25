@@ -422,7 +422,7 @@ const templates = [
               zu dir nach Hause
             </div>
             <div style="font-size: 24px;margin-bottom: 4rem;">Der Klimafreundliche lokale Lieferdienst</div>
-            <div class="button btn-l">Produkte Suchen</div>
+            <div class="button btn-l" route="/search">Produkte Suchen</div>
           </div>
           <div class="md:w-1/2">
     				<div class="banner" style="display: flex;align-items: center;justify-content: center;">
