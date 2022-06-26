@@ -61,6 +61,13 @@ document.getElementById("navItemBasket").addEventListener("click", () => {
   showFloatingBasket();
 });
 
+const updateNavBasket = (basket) => {
+  document.getElementById("basketItemCount").innerHTML = basket.quantity_count;
+  document.getElementById("floatingBasketTotal").innerHTML =
+    basket._totalWithVat;
+  renderBasketItems(basket.items, "floatingBasketItems");
+};
+
 const authApi = {
   auth: () => {
     return new Promise((resolve) => {
@@ -151,11 +158,7 @@ const basketApi = {
         },
       }).then((res) => {
         window.$store.basket = res.data;
-        document.getElementById("basketItemCount").innerHTML =
-          res.data.quantity_count;
-        document.getElementById("floatingBasketTotal").innerHTML =
-          res.data._total;
-        renderBasketItems(res.data.items, "floatingBasketItems");
+        updateNavBasket(res.data);
         resolve(res.data);
       });
     });
@@ -171,9 +174,7 @@ const basketApi = {
         setCookie("basketId", json.id);
         window.$store.basket.basket = json;
         window.$store.basket.id = json.id;
-        document.getElementById("basketItemCount").innerHTML =
-          json.quantity_count;
-        renderBasketItems(json.items, "floatingBasketItems");
+        updateNavBasket(json);
         showFloatingBasket();
       }
     };
@@ -194,7 +195,7 @@ const basketApi = {
         },
       }).then((res) => {
         window.$store.basket = res.data;
-        renderBasketItems(res.data.items, "floatingBasketItems");
+        updateNavBasket(res.data);
         resolve(res);
       });
     });
@@ -217,7 +218,7 @@ function renderItems(targetId, items) {
 				    	<a class="prdct-itm" route="/product/${item.key}">
 				    		<div class="prdct-itm_img">
 				    			<img src="${preview_image}?height=330&width=310&size=1"/>
-                  <a class="prdct-itm_cart-btn button btn-s" href="https://twitter.com/jonasatia" target="_blank" rel="noopener">
+                  <a class="prdct-itm_cart-btn button btn-s">
                     <img src="https://cdn.purdia.com/assets/icons/default/basket-add.svg" style="height:16px;width:16px;">
                   </a>
 				    		</div>
@@ -231,6 +232,11 @@ function renderItems(targetId, items) {
     component.classList.add("item");
 
     document.getElementById(targetId).appendChild(component);
+    component
+      .querySelector(".prdct-itm_cart-btn")
+      .addEventListener("click", () => {
+        basketApi.addItem(item.available_variants[0].id, 1);
+      });
     linkListener();
   });
 }
@@ -969,7 +975,7 @@ elSearch.addEventListener("keypress", (e) => {
 
 document.getElementById("searchButton").addEventListener("click", (e) => {
   changeRoute(`/search?s=${e.target.value}`);
-})
+});
 
 api("v1/shop")
   .then((res) => {
