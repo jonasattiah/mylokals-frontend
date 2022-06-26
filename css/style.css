@@ -655,6 +655,9 @@ div#card-element {
 .floating-basket .prdct-itm-details {
     margin-left: 0.5rem;
 }
+.basket-item-remove {
+  margin-top: .5rem;
+}
 @media (min-width: 414px) {
   :root {
     --product-list-cols: 3;
