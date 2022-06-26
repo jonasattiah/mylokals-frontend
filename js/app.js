@@ -217,7 +217,9 @@ function renderItems(targetId, items) {
 				    	<a class="prdct-itm" route="/product/${item.key}">
 				    		<div class="prdct-itm_img">
 				    			<img src="${preview_image}?height=330&width=310&size=1"/>
-                  <a class="prdct-itm_cart-btn button btn-s" href="https://twitter.com/jonasatia" target="_blank" rel="noopener">+</a>
+                  <a class="prdct-itm_cart-btn button btn-s" href="https://twitter.com/jonasatia" target="_blank" rel="noopener">
+                    <img src="https://cdn.purdia.com/assets/icons/default/basket-add.svg" style="height:16px;width:16px;">
+                  </a>
 				    		</div>
 				    		<div>${item.name}</div>
 				    		<div>${item._priceWithTax}</div>
