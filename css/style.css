@@ -7,7 +7,7 @@
   --body_min-height: 100vh;
   --body_background: #fefdfe;
 
-  --link-color: var(--color);
+  --link_color: #1d5ac5;
 
   --headline_font: "basiersquare";
   --headline_font-size: 24px;
@@ -161,6 +161,7 @@ button:disabled {
 }
 .nav li a {
   cursor: pointer;
+  color: #000;
 }
 .nav li:last-child a {
   margin: 0;
@@ -493,6 +494,15 @@ div#card-element {
   -webkit-box-shadow: 0 2px 9px rgb(0 0 0 / 10%);
   box-shadow: 0 2px 9px rgb(0 0 0 / 10%);
   background: #fff;
+}
+.card-plain {
+  border: 1px solid rgb(225, 232, 240);
+  border-radius: 6px;
+  background: rgb(255, 255, 255);
+  width: 100%;
+  padding: 0.75rem 0.65rem;
+  font-weight: 600;
+  display: block;
 }
 .skeleton {
   background: radial-gradient(#fff, #f5f5f5);

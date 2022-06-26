@@ -226,7 +226,7 @@ function renderItems(targetId, items) {
   items.forEach((item) => {
     const preview_image = item.images[0] ? item.images[0].url : null;
     const template = `
-				    	<a class="prdct-itm" route="/product/${item.key}">
+				    	<div class="prdct-itm" route="/product/${item.key}">
 				    		<div class="prdct-itm_img">
 				    			<img src="${preview_image}?height=330&width=310&size=1"/>
                   <a class="prdct-itm_cart-btn button btn-s">
@@ -235,7 +235,7 @@ function renderItems(targetId, items) {
 				    		</div>
 				    		<div>${item.name}</div>
 				    		<div>${item._priceWithTax}</div>
-				    	</a>
+				    	</div>
 				      `;
 
     let component = document.createElement("div");
@@ -277,7 +277,7 @@ function renderBasketItems(items, targetId) {
   document.getElementById(targetId).innerHTML = "";
   items.forEach((item) => {
     const template = `
-                <a class="prdct-itm">
+                <div class="prdct-itm">
                   <div class="prdct-itm_img">
                     <img src="${item.image_url}?height=330&width=310&size=1"/>
                   </div>
@@ -290,7 +290,7 @@ function renderBasketItems(items, targetId) {
                       "component.basket.item.remove"
                     )}</div>
                   </div>
-                </a>
+                </div>
                 `;
 
     let component = document.createElement("div");

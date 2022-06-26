@@ -277,10 +277,13 @@ const checkoutView = {
             if (res.data.user) {
               elLoginBtn.style.display = "none";
               document.getElementById("shippingFields").style.display = "none";
-              document.getElementById("storedShippingAddress").innerHTML =
+              document.getElementById("storedShippingAddress").querySelector("span").innerHTML =
                 res.data._shippingAddress;
               document.getElementById("storedShippingAddress").style.display =
                 "block";
+              document.getElementById("customer_email").style.display = "none";
+              document.getElementById("customer_password").style.display = "none";
+              document.getElementById("orderAsGuestRow").style.display = "none";
             }
             if (res.data.shipping_address) {
               document.getElementById("shipping_firstname").value =
@@ -295,8 +298,6 @@ const checkoutView = {
                 res.data.shipping_address.city;
               document.getElementById("shipping_country").value =
                 res.data.shipping_address.country;
-              document.getElementById("customer_email").value =
-                res.data.shipping_address.email;
             }
             renderPaymentMethods(res.data.payment_methods);
             renderShippingMethods(res.data.shippingMethods);
@@ -330,13 +331,18 @@ const checkoutView = {
       });
     };
 
+    document.getElementById("shippingAddressEdit").addEventListener("click", () => {
+      document.getElementById("storedShippingAddress").style.display = "none";
+      document.getElementById("shippingFields").style.display = "block";
+    })
+
     fetchCheckout();
 
     function renderItems(items) {
       document.querySelector("#items skeleton").remove();
       items.forEach((item) => {
         const template = `
-					    	<a class="prdct-itm" route="/product/${item.key}">
+					    	<div class="prdct-itm" route="/product/${item.key}">
 					    		<div class="prdct-itm_img">
 					    			<img src="${item.image_url}?height=330&width=310&size=1"/>
 					    		</div>
@@ -344,7 +350,7 @@ const checkoutView = {
 					    			<div class="item-name">${item.variant.name}</div>
 					    			<div class="item-price">${item.variant._priceWithTax}</div>
 					    		</div>
-					    	</a>
+					    	</div>
 					      `;
 
         let component = document.createElement("div");
@@ -655,7 +661,10 @@ const checkoutView = {
 								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem">${window.$t(
                   "view.checkout.shipping.headline"
                 )}</div>		
-								<div style="font-family: 'basiercircle';border: 1px solid #e1e8f0;border-radius: 6px;background: #fff;width: 100%;display: inline-block;padding: .75rem 0.65rem;font-weight: 600;display:none;" id="storedShippingAddress"></div>
+								<div class="card-plain" id="storedShippingAddress">
+                  <span></span>
+                  <a id="shippingAddressEdit">Ändern</a>
+                </div>
 								<div id="shippingFields">
 								<div class="mt-4 flex form-group">
 									<div class="w-1/2">
