@@ -52,19 +52,19 @@ const showFloatingBasket = () => {
 };
 
 const hideFloatingBasket = (keepCookie) => {
-  if(!keepCookie) removeCookie("showFloatingBasket");
+  if (!keepCookie) removeCookie("showFloatingBasket");
   document.getElementById("floatingBasketBody").style.display = "none";
   document.getElementsByClassName("floating-inner")[0].classList.remove("card");
   document
     .getElementsByClassName("floating-basket")[0]
     .classList.remove("is-fixed");
   document.getElementById("body").classList.remove("has-cart");
-}
+};
 
 if (getCookie("showFloatingBasket")) showFloatingBasket();
 
 document.getElementById("floatingBasketClose").addEventListener("click", () => {
-  hideFloatingBasket()
+  hideFloatingBasket();
 });
 
 document.getElementById("navItemBasket").addEventListener("click", () => {
@@ -107,6 +107,7 @@ const authApi = {
         .then((res) => {
           setCookie("accessToken", res.data.user.token);
           window.$store.auth.setAuth(res.data.user.token);
+          resolve(res);
         })
         .catch((err) => reject(err));
     });
@@ -307,6 +308,40 @@ function renderBasketItems(items, targetId) {
     document.getElementById(targetId).appendChild(component);
   });
 }
+const renderLoginForm = (targetId, successCallback) => {
+  const template = `
+    <form id="form">
+      <div class="headline">Login</div>
+      <div class="form-field">
+        <input class="form-field-input" name="email" id="email" placeholder="E-Mail" type="email" required>
+      </div>
+      <div class="form-field" style="margin-top: .5rem;">
+        <input class="form-field-input" name="password" id="password" placeholder="Password" type="password" required>
+      </div>
+      <div class="error-message" id="errors"></div>
+      <a class="button" id="submit" style="margin-top: .25rem;">Login</a>
+    </form>
+  `;
+  let el = document.createElement("div");
+  el.innerHTML = template;
+  el.classList.add("login-form");
+
+  el.querySelector("#submit").addEventListener("click", () => {
+    const form = getFormData("form");
+    authApi
+      .login(form)
+      .then((res) => {
+        console.log(res);
+        if (successCallback) successCallback();
+      })
+      .catch((err) => {
+        if (err.data.errors) {
+          el.querySelector("#errors").innerHTML = "Bitte prüfe deine Daten";
+        }
+      });
+  });
+  document.getElementById(targetId).appendChild(el);
+};
 
 const templates = [
   {
@@ -523,35 +558,12 @@ const templates = [
   {
     name: "login",
     init: () => {
-      document.getElementById("submit").addEventListener("click", () => {
-        const form = getFormData("form");
-        authApi
-          .login(form)
-          .then((res) => {
-            changeRoute("/account");
-          })
-          .catch((err) => {
-            if (err.data.errors) {
-              document.getElementById("errors").innerHTML =
-                "Bitte prüfe deine Daten";
-            }
-          });
+      renderLoginForm("login-form", () => {
+        changeRoute("/account");
       });
     },
     template: `
-				    <div>
-				    	<form class="md:w-1/3 mx-auto" id="form">
-				    		<div class="headline">Login</div>
-				    		<div class="form-field">
-					    		<input class="form-field-input" name="email" id="email" placeholder="E-Mail" type="email" required>
-					    	</div>
-					    	<div class="form-field" style="margin-top: .5rem;">
-					    		<input class="form-field-input" name="password" id="password" placeholder="Password" type="password" required>
-					    	</div>
-                <div class="error-message" id="errors"></div>
-					    	<a class="button" id="submit" style="margin-top: 1rem;">Login</a>
-				    	</form>
-				    </div>
+				    <div class="md:w-1/3 mx-auto" id="login-form"></div>
 				`,
   },
   {

@@ -112,13 +112,14 @@ let stripe = {
 const checkoutView = {
   name: "checkout",
   init: () => {
-    hideFloatingBasket(true)
+    hideFloatingBasket(true);
     const elErrors = document.getElementById("checkout-errors");
-    const elPaymentErrors = document.getElementById("payment-errors")
+    const elPaymentErrors = document.getElementById("payment-errors");
+    const elLoginBtn = document.getElementById("login-btn");
     const resetPaymentErrors = () => {
-      elPaymentErrors.innerHTML = ""
-      elPaymentErrors.style.display = "none"
-    }
+      elPaymentErrors.innerHTML = "";
+      elPaymentErrors.style.display = "none";
+    };
     const resetErrors = () => {
       elErrors.innerHTML = "";
     };
@@ -173,7 +174,7 @@ const checkoutView = {
           el.classList.add("active");
         }
         el.addEventListener("change", () => {
-          resetPaymentErrors()
+          resetPaymentErrors();
           submitButton.disabled = true;
           const elPaymentMethods = document.getElementsByName("payment_method");
           for (var i = elPaymentMethods.length - 1; i >= 0; i--) {
@@ -256,6 +257,7 @@ const checkoutView = {
           .then((res) => {
             window.$store.order.order = res.data;
             if (res.data.user) {
+              elLoginBtn.style.display = "none";
               document.getElementById("shippingFields").style.display = "none";
               document.getElementById("storedShippingAddress").innerHTML =
                 res.data._shippingAddress;
@@ -378,7 +380,7 @@ const checkoutView = {
     };
 
     const onSubmit = async (e) => {
-      resetPaymentErrors()
+      resetPaymentErrors();
       document.querySelectorAll(".checkout-field-error").forEach((item) => {
         if (item) item.remove();
       });
@@ -504,9 +506,9 @@ const checkoutView = {
             authModel = {
               register: {
                 email: form.customer_email,
-                password: form.customer_password
-              }
-            }
+                password: form.customer_password,
+              },
+            };
           }
           api("v1/order/data", {
             method: "PUT",
@@ -568,11 +570,11 @@ const checkoutView = {
               })
               .catch((err) => {
                 elPaymentErrors.appendChild(
-                    document.createTextNode(
-                      window.$t("error.payment.stripeCard."+err.code)
-                    )
-                  );
-                elPaymentErrors.style.display = "block"
+                  document.createTextNode(
+                    window.$t("error.payment.stripeCard." + err.code)
+                  )
+                );
+                elPaymentErrors.style.display = "block";
                 return;
               });
           } else {
@@ -596,10 +598,19 @@ const checkoutView = {
         fieldPassword.setAttribute("required", "");
       }
     });
+
+    elLoginBtn.addEventListener("click", () => {
+      elLoginBtn.style.display = "none";
+      renderLoginForm("login-form", () => {
+        window.location.reload();
+      });
+    });
   },
   template: `
 				    <div class="checkout-view md:block">
 						<div class="card p-3" style="max-width: 600px;">
+              <div class="button btn-gray" style="margin-bottom: 1rem;border-radius: 999px;width:100%;" id="login-btn">Login</div>
+              <div id="login-form"></div>
 							<form id="checkout-form" action="javascript:onSubmit();" autocomplete="on">
 								<!--
 								<div class="items flex overflow" id="items" style="border-radius: 4px;">
