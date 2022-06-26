@@ -103,7 +103,6 @@ let stripe = {
               resolve();
             }
           }
-          // vm.loading = false
         });
     });
   },
@@ -116,6 +115,25 @@ const checkoutView = {
     const elErrors = document.getElementById("checkout-errors");
     const elPaymentErrors = document.getElementById("payment-errors");
     const elLoginBtn = document.getElementById("login-btn");
+    const loading = (isLoading) => {
+      const elFormFields = document.querySelectorAll(
+        `#checkout-form .form-field-input`
+      );
+      if (isLoading) {
+        document.getElementById("submit").disabled = true;
+        document.getElementById("checkout").classList.add("is-disabled");
+        elFormFields.forEach((field) => {
+          field.disabled = true;
+        });
+      } else {
+        document.getElementById("submit").disabled = false;
+        document.getElementById("checkout").classList.remove("is-disabled");
+
+        elFormFields.forEach((field) => {
+          field.disabled = false;
+        });
+      }
+    };
     const resetPaymentErrors = () => {
       elPaymentErrors.innerHTML = "";
       elPaymentErrors.style.display = "none";
@@ -381,6 +399,7 @@ const checkoutView = {
 
     const onSubmit = async (e) => {
       resetPaymentErrors();
+      document.getElementById("shipping-error").innerHTML = "";
       document.querySelectorAll(".checkout-field-error").forEach((item) => {
         if (item) item.remove();
       });
@@ -473,6 +492,7 @@ const checkoutView = {
                       )
                     )
                   );
+              loading(false);
             }
           });
       };
@@ -570,6 +590,7 @@ const checkoutView = {
       };
 
       if (validation.valid) {
+        loading(true);
         updateOrder().then(() => {
           if (window.$store.checkout.selectedPaymentMethod === "stripe") {
             stripe
@@ -587,6 +608,7 @@ const checkoutView = {
                   )
                 );
                 elPaymentErrors.style.display = "block";
+                loading(false);
                 return;
               });
           } else {
@@ -619,11 +641,11 @@ const checkoutView = {
     });
   },
   template: `
-				    <div class="checkout-view md:block">
-						<div class="card p-3" style="max-width: 600px;">
+				    <div class="checkout-view md:block" id="checkout">
+						<div class="card p-3" style="max-width: 600px;position:relative;">
               <div class="button btn-gray" style="margin-bottom: 1rem;border-radius: 999px;width:100%;" id="login-btn">Login</div>
               <div id="login-form"></div>
-							<form id="checkout-form" action="javascript:onSubmit();" autocomplete="on">
+							<form id="checkout-form" action="javascript:;" autocomplete="on" novalidate>
 								<!--
 								<div class="items flex overflow" id="items" style="border-radius: 4px;">
 									<skeleton style="width: 100%;height:114px;border-radius: 4px;background: #fff;"></skeleton>
@@ -745,9 +767,9 @@ const checkoutView = {
 								<div class="error-message" id="checkout-errors"></div>
 
 								<div style="margin-top: 1rem;">
-									<div class="button w-full" id="submit">
+									<button class="button w-full" id="submit">
 										${window.$t("view.checkout.submitOrder.button")}
-									</div>
+									</button>
 								</div>
 							</form>
 						</div>

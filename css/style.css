@@ -463,6 +463,11 @@ div#card-element {
 .form-field input::placeholder {
   color: #757575;
 }
+.form-field input:disabled,
+.form-field select:disabled,
+.form-field-style:disabled {
+  opacity: 0.5;
+}
 .form-field .error-message {
   margin-top: 0.125rem;
 }
@@ -471,6 +476,10 @@ div#card-element {
 }
 .form-group .form-field {
   padding: 0 0.25rem;
+}
+.is-disabled {
+  opacity: 0.5;
+  transition: all 0.3s;
 }
 .error-message {
   font-size: 12px;
