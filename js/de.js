@@ -256,6 +256,8 @@ const json = {
   "error.field_invalid_email_format": "Diese E-Mail ist nicht gültig",
   "error.account_already_exists":
     "Diese E-Mail Adresse ist bereits bei uns registriert",
+  "error.payment.stripeCard.card_declined": "Deine Karte wurde abgelehnt",
+  "error.payment.stripeCard.incorrect_cvc": "Der Sicherheitscode ist falsch",
 };
 
 const lang = JSON.parse(JSON.stringify(json));

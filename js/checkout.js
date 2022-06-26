@@ -62,7 +62,7 @@ let stripe = {
         })
         .then((result) => {
           if (result.error) {
-            reject({ key: "payment_stripe_" + result.error.code });
+            reject({ code: result.error.code });
           } else {
             if (result.paymentIntent.status === "succeeded") {
               resolve();
@@ -114,6 +114,11 @@ const checkoutView = {
   init: () => {
     hideFloatingBasket(true)
     const elErrors = document.getElementById("checkout-errors");
+    const elPaymentErrors = document.getElementById("payment-errors")
+    const resetPaymentErrors = () => {
+      elPaymentErrors.innerHTML = ""
+      elPaymentErrors.style.display = "none"
+    }
     const resetErrors = () => {
       elErrors.innerHTML = "";
     };
@@ -168,6 +173,7 @@ const checkoutView = {
           el.classList.add("active");
         }
         el.addEventListener("change", () => {
+          resetPaymentErrors()
           submitButton.disabled = true;
           const elPaymentMethods = document.getElementsByName("payment_method");
           for (var i = elPaymentMethods.length - 1; i >= 0; i--) {
@@ -372,6 +378,7 @@ const checkoutView = {
     };
 
     const onSubmit = async (e) => {
+      resetPaymentErrors()
       document.querySelectorAll(".checkout-field-error").forEach((item) => {
         if (item) item.remove();
       });
@@ -559,7 +566,13 @@ const checkoutView = {
               .then(() => {
                 confirmOrder();
               })
-              .catch(() => {
+              .catch((err) => {
+                elPaymentErrors.appendChild(
+                    document.createTextNode(
+                      window.$t("error.payment.stripeCard."+err.code)
+                    )
+                  );
+                elPaymentErrors.style.display = "block"
                 return;
               });
           } else {
@@ -675,6 +688,7 @@ const checkoutView = {
                 )}</div>
 								<div class="form-card-select mt-4" id="payment"></div>
 								<div id="card-element" style="display:none;"></div>
+                <div class="error-message" id="payment-errors" style="margin-top: 0.25rem;"></div>
 
 								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;margin-top: 1rem">${window.$t(
                   "view.checkout.shippingOption.headline"
