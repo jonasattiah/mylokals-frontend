@@ -112,6 +112,7 @@ let stripe = {
 const checkoutView = {
   name: "checkout",
   init: () => {
+    hideFloatingBasket(true)
     const elErrors = document.getElementById("checkout-errors");
     const resetErrors = () => {
       elErrors.innerHTML = "";

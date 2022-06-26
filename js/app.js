@@ -51,16 +51,20 @@ const showFloatingBasket = () => {
   document.getElementById("body").classList.add("has-cart");
 };
 
-if (getCookie("showFloatingBasket")) showFloatingBasket();
-
-document.getElementById("floatingBasketClose").addEventListener("click", () => {
-  removeCookie("showFloatingBasket");
+const hideFloatingBasket = (keepCookie) => {
+  if(!keepCookie) removeCookie("showFloatingBasket");
   document.getElementById("floatingBasketBody").style.display = "none";
   document.getElementsByClassName("floating-inner")[0].classList.remove("card");
   document
     .getElementsByClassName("floating-basket")[0]
     .classList.remove("is-fixed");
   document.getElementById("body").classList.remove("has-cart");
+}
+
+if (getCookie("showFloatingBasket")) showFloatingBasket();
+
+document.getElementById("floatingBasketClose").addEventListener("click", () => {
+  hideFloatingBasket()
 });
 
 document.getElementById("navItemBasket").addEventListener("click", () => {
