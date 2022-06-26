@@ -668,7 +668,7 @@ const checkoutView = {
 								<div id="card-element" style="display:none;"></div>
 
 								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;margin-top: 1rem">${window.$t(
-                  "view.checkout.shipping.headline"
+                  "view.checkout.shippingOption.headline"
                 )}</div>
 								<div class="form-card-select" id="shipping"></div>
 								<!--

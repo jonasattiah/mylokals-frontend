@@ -45,6 +45,9 @@ const showFloatingBasket = () => {
   setCookie("showFloatingBasket", true);
   document.getElementById("floatingBasketBody").style.display = "block";
   document.getElementsByClassName("floating-inner")[0].classList.add("card");
+  document
+    .getElementsByClassName("floating-basket")[0]
+    .classList.add("is-fixed");
   document.getElementById("body").classList.add("has-cart");
 };
 
@@ -54,6 +57,9 @@ document.getElementById("floatingBasketClose").addEventListener("click", () => {
   removeCookie("showFloatingBasket");
   document.getElementById("floatingBasketBody").style.display = "none";
   document.getElementsByClassName("floating-inner")[0].classList.remove("card");
+  document
+    .getElementsByClassName("floating-basket")[0]
+    .classList.remove("is-fixed");
   document.getElementById("body").classList.remove("has-cart");
 });
 
@@ -432,7 +438,7 @@ const templates = [
             <div style="font-size: 24px;margin-bottom: 4rem;">Der Klimafreundliche lokale Lieferdienst</div>
             <div class="button btn-l" route="/search">Produkte Suchen</div>
           </div>
-          <div class="md:w-1/2">
+          <div class="md:w-1/2 hidden md:block">
     				<div class="banner" style="display: flex;align-items: center;justify-content: center;">
               <div class="" id='map' style='width: 100%; height: 100%;border-radius: 6px;'></div>
             </div>
@@ -441,7 +447,7 @@ const templates = [
       </div>
 			    <div style="margin-top: 4rem;">
 
-            <div style="background: #FFE26A;padding: 2rem 0;">
+            <div class="hidden md:block" style="background: #FFE26A;padding: 2rem 0;">
               <div class="container">
     			    	<div>
     			    		<div class="headline">Aus deiner Stadt</div>
@@ -451,11 +457,11 @@ const templates = [
               </div>
             </div>
 
-            <div class="container" style="margin-top: 4rem;padding: 2rem 0;">
+            <div class="container" style="margin-top: 4rem;padding: 2rem 1rem;">
               <div class="headline text-center" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
                 Das liefern wir                
               </div>
-              <div style="grid-template-columns: repeat(6, minmax(0, 1fr));gap: 0.75rem;display: grid;">
+              <div class="home-categories-grid">
                 <div>
                   <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
                     <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
@@ -644,7 +650,7 @@ const templates = [
               </div>
 
               <div class="md:flex" style="margin-top: 4rem;">
-                <ul id="categoriesSidebar" style="max-width: 200px;width: 100%;padding-right: 1rem;"></ul>
+                <ul class="hidden md:block" id="categoriesSidebar" style="max-width: 200px;width: 100%;padding-right: 1rem;"></ul>
                 <div>
                   <div class="w-2/3 md:w-1/2" style="margin-bottom: 1rem;">
                     <div class="form-field form-field-search">
