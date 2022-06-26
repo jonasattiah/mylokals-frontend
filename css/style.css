@@ -518,7 +518,7 @@ div#card-element {
   position: absolute;
   right: 12px;
   top: 12px;
-  pointer-events: none;
+  cursor: pointer;
 }
 .store-list {
       grid-template-columns: repeat(3, minmax(0, 1fr));

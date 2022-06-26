@@ -953,7 +953,7 @@ linkListener();
 
 let searchTerm = window.$route.query.s;
 const elSearch = document.getElementById("search");
-elSearch.value = searchTerm;
+if (searchTerm) elSearch.value = searchTerm;
 elSearch.addEventListener("change", (e) => {
   console.log(e.target.value);
 });
@@ -964,6 +964,10 @@ elSearch.addEventListener("keypress", (e) => {
     changeRoute(`/search?s=${e.target.value}`);
   }
 });
+
+document.getElementById("searchButton").addEventListener("click", (e) => {
+  changeRoute(`/search?s=${e.target.value}`);
+})
 
 api("v1/shop")
   .then((res) => {
