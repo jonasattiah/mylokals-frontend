@@ -493,6 +493,14 @@ const checkoutView = {
         return new Promise((resolve, reject) => {
           const form = getFormData("checkout-form");
           let authModel = null;
+          if (!window.$store.order.order.user) {
+            authModel = {
+              register: {
+                email: form.customer_email,
+                password: form.customer_password
+              }
+            }
+          }
           api("v1/order/data", {
             method: "PUT",
             headers: {
