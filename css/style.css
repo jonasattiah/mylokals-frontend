@@ -162,14 +162,17 @@ button:disabled {
   margin: 0;
 }
 .nav-item-basket span {
-  color: #000;
+  color: #fff;
   width: auto;
   height: 14px;
   display: inline-block;
-  line-height: 14px;
-  text-align: center;
-  font-size: 12px;
-  border-radius: 2px;
+line-height: 16px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 3px;
+    width: 16px;
+    height: 16px;
+    background: #1e5ac5;
 }
 .footer {
   padding: 1rem 0 8rem;
