@@ -20,24 +20,6 @@
   display: grid;
 }
 
-.store-list-item {
-  border-radius: 6px;
-  padding: 1rem;
-  background: #ffffff;
-  border: 1px solid #e6e6e6;
-  box-shadow: 0 0px 14px 0 rgb(0 0 0 / 10%);
-  width: 100%;
-  padding: 0.5rem;
-}
-.store-list-item .store-image {
-  background: url("https://api.mylokals.de/api/v1/images/61333f5373221b71f7fac992/2021-09-15/12401cdae14f40bc21daab934c446fe32fc6dc66a5f42326.jpeg?height=216&size=2")
-    center center / cover rgb(255, 255, 255);
-  border-radius: 4px;
-  height: 100%;
-  width: 100%;
-  box-shadow: rgb(136 136 136) 0px 0px 1px inset;
-}
-
 .marker {
   background: #ffffff;
   width: 32px;

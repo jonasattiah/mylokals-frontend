@@ -209,7 +209,7 @@ const checkoutView = {
     const renderShippingMethods = (items) => {
       items.forEach((item) => {
         const template = `
-						  <input name="shippingMethods" value="${item.key}" type="radio">
+						  <input class="form-field-input" name="shippingMethods" value="${item.key}" type="radio" required>
 						  <span></span>
 					      <img src="https://cdn.purdia.com/assets/icons/default/shipping/${item.key}.svg" alt="${item.key}" height="24px">
 					      <div class="description">${item.name}<span style="margin-left: 0.25rem;color: #757575;">${item._price}</span></div>
@@ -394,7 +394,12 @@ const checkoutView = {
         .querySelectorAll(`#checkout-form .form-field-input`)
         .forEach((field) => {
           const { validity } = field;
-          validation.items.push(Object(validity));
+          if (!validation.items.find((item) => item.id === field.name)) {
+            validation.items[field.name] = {
+              id: field.name,
+              validation: Object(validity),
+            };
+          }
           if (!validity.valid) {
             const errors = [];
             for (let item in validity) {
@@ -402,15 +407,22 @@ const checkoutView = {
                 errors.push(item);
               }
             }
-            document
-              .getElementById(field.id)
-              .parentElement.append(ErrorMessage(errors));
+            if (field.type !== "radio") {
+              field.parentElement.append(ErrorMessage(errors));
+            }
           }
         });
 
       validation.valid = !Boolean(
-        validation.items.filter((item) => !item.valid).length
+        Object.keys(validation.items).filter(
+          (item) => !validation.items[item].validation.valid
+        ).length
       );
+
+      if (validation.items.shippingMethods.validation.valueMissing) {
+        document.getElementById("shipping-error").innerHTML =
+          "Bitte wähle eine Versandart";
+      }
 
       const clearSessions = () => {
         window.$store.basket.id = null;
@@ -704,7 +716,8 @@ const checkoutView = {
 								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;margin-top: 1rem">${window.$t(
                   "view.checkout.shippingOption.headline"
                 )}</div>
-								<div class="form-card-select" id="shipping"></div>
+								<div class="form-card-select form-field" id="shipping"></div>
+                <div class="error-message" id="shipping-error"></div>
 								<!--
 								<div class="mt-4">
 									<label>
