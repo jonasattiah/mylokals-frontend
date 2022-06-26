@@ -28,6 +28,8 @@
 
   --navigation_background: transparent;
   --navigation_padding: 1.5rem 1rem;
+
+  --product-list-cols: 2;
 }
 @font-face {
   font-family: "basiercircle";
@@ -237,7 +239,7 @@ button:disabled {
 }
 .prdcts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--product-list-cols), minmax(0, 1fr));
   gap: 0.5rem;
 }
 .prdcts--list {
@@ -630,6 +632,18 @@ div#card-element {
   border-radius: 12px;
   box-shadow: rgb(136 136 136) 0px 0px 1px inset;
 }
+.category-product-list {
+    grid-template-columns: repeat(var(--product-list-cols), minmax(0, 1fr));
+  }
+.floating-basket {
+      position: fixed;
+    right: 1rem;
+    top: 1rem;
+    height: auto;
+    z-index: 30;
+    padding-left: 1rem;
+    max-width: 350px;
+}
 .floating-basket .prdct-itm_img {
     max-width: 96px;
     margin: 0;
@@ -642,13 +656,13 @@ div#card-element {
     margin-left: 0.5rem;
 }
 @media (min-width: 414px) {
-  .category-product-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  :root {
+    --product-list-cols: 3;
   }
 }
 @media (min-width: 601px) {
-  .category-product-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  :root {
+    --product-list-cols: 4;
   }
 }
 @media (min-width: 768px) {
@@ -673,9 +687,6 @@ div#card-element {
   .nav-item-basket span {
     padding: 0 3px;
     position: absolute;
-  }
-  .category-product-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .prdcts--list {
     display: block;
@@ -719,24 +730,25 @@ div#card-element {
   }
 }
 @media (min-width: 1024px) {
-  .category-product-list {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+  :root {
+    --product-list-cols: 5;
   }
   body .has-cart {
     padding-right: 398px;
+    --product-list-cols: 3;
   }
-  body .has-cart .category-product-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .floating-basket {
+    width: 350px;
   }
 }
 @media (min-width: 1366px) {
-  body .has-cart .category-product-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  body .has-cart {
+    --product-list-cols: 4;
   }
 }
 @media (min-width: 1536px) {
-  body .has-cart .category-product-list {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+  body .has-cart {
+    --product-list-cols: 5;
   }
 }
 @media (max-width: 768px) {

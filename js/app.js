@@ -576,6 +576,24 @@ const templates = [
 				`,
   },
   {
+    name: "search",
+    init: () => {
+      categoryApi
+        .fetchCategory("baby", {
+          limit: 100,
+        })
+        .then((res) => {
+          renderItems("items", res.data.products);
+        });
+    },
+    template: `
+    <div class="container">
+      <div>Ergebnisse (4256)</div>
+      <div class="prdcts mt-20 view-transition" id="items" style="margin-top:1rem;"></div>
+    </div>
+    `,
+  },
+  {
     name: "store",
     init: () => {
       categoryApi
@@ -892,6 +910,11 @@ const routes = [
     path: "/account",
     key: "account",
     view: "account",
+  },
+  {
+    path: "/search",
+    key: "search",
+    view: "search",
   },
   {
     path: "/store",
