@@ -168,7 +168,7 @@ const basketApi = {
           "basket-id": window.$store.basket.id,
         },
       }).then((res) => {
-        window.$store.basket = res.data;
+        window.$store.basket.basket = res.data;
         updateNavBasket(res.data);
         resolve(res.data);
       });
@@ -205,7 +205,7 @@ const basketApi = {
           "basket-id": window.$store.basket.id,
         },
       }).then((res) => {
-        window.$store.basket = res.data;
+        window.$store.basket.basket = res.data;
         updateNavBasket(res.data);
         resolve(res);
       });
