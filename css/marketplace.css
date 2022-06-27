@@ -123,6 +123,11 @@
 .floating-basket.is-fixed {
   position: fixed;
 }
+.floating-basket.is-fixed .nav-item-basket {
+  width: 100%;
+  text-align: right;
+  justify-content: end;
+}
 .floating-basket .prdct-itm_img {
   max-width: 96px;
   margin: 0;

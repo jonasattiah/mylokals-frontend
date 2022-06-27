@@ -625,7 +625,7 @@ div#card-element {
     padding-right: 398px;
     --product-list-cols: 3;
   }
-  .floating-basket {
+  .floating-basket.is-fixed {
     width: 350px;
   }
 }
