@@ -664,6 +664,15 @@ const checkoutView = {
   },
   template: `
 				    <div class="checkout-view md:block" id="checkout">
+            <div class="card p-3" style="max-width: 600px;position:relative;margin-bottom: .5rem;display:flex;">
+              <img src="https://cdn-icons-png.flaticon.com/512/7791/7791605.png" style="height:24px;margin-right:1rem;">
+              <div>
+                <div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;line-height: 24px;">
+                  Lieferung
+                </div>
+                <div style="color: #1e5ac5;">Heute 17:00 - 19:00 Uhr</div>
+              </div>
+            </div>
 						<div class="card p-3" style="max-width: 600px;position:relative;">
               <div class="button btn-gray" style="margin-bottom: 1rem;border-radius: 999px;width:100%;" id="login-btn">Login</div>
               <div id="login-form"></div>
