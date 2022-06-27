@@ -67,8 +67,22 @@ const templates = [
     },
     template: `
     <div class="container">
-      <div>Ergebnisse (4256)</div>
-      <div class="prdcts mt-20 view-transition" id="items" style="margin-top:1rem;"></div>
+      <div class="flex">
+        <div class="hidden md:block" style="padding-right: 1rem;width: 25%;">
+          <div>Filter</div>
+          <div style="font-size: 14px;">
+            <div>Ort: Grevenbroich <a>Ändern</a></div>
+            <label>
+              <input class="form-field-input" type="checkbox" name="freeDelivery">
+              <span>Kostenlose Lieferung</span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <div>Ergebnisse (4256)</div>
+          <div class="prdcts mt-20 view-transition" id="items" style="margin-top:1rem;"></div>
+        </div>
+      </div>
     </div>
     `,
   },
