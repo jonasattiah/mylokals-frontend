@@ -163,6 +163,10 @@ button:disabled {
   cursor: pointer;
   color: #000;
 }
+.nav li a.active {
+  text-decoration: underline;
+  color: #1d5ac5;
+}
 .nav li:last-child a {
   margin: 0;
 }

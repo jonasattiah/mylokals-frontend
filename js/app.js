@@ -137,17 +137,7 @@ const categoryApi = {
     return new Promise((resolve) => {
       api("sf/v1/categories").then((res) => {
         renderCategories(
-          [
-            {
-              name: "Drogerie",
-            },
-            {
-              name: "Lebensmittel",
-            },
-            {
-              name: "Kleidung",
-            },
-          ],
+          res.data.categories,
           document.getElementsByClassName("navCategories")[0]
         );
         resolve(res);
