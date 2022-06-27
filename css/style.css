@@ -424,7 +424,6 @@ button:disabled {
 }
 .form-card-select label.active {
   border: 1px solid #757575;
-  outline: 1px solid #757575;
 }
 .form-card-select label input {
   display: none;
