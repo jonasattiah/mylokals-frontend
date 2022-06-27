@@ -551,12 +551,19 @@ const checkoutView = {
       const updateOrder = () => {
         return new Promise((resolve, reject) => {
           const form = getFormData("checkout-form");
-          let authModel = null;
-          if (!window.$store.order.order.user) {
-            authModel = {
+          let customerModel = null;
+          if (!window.$store.order.order.user && !form.orderAsGuest) {
+            customerModel = {
               register: {
                 email: form.customer_email,
                 password: form.customer_password,
+              },
+            };
+          } else if (form.orderAsGuest) {
+            customerModel = {
+              orderAsGuest: form.orderAsGuest,
+              guest: {
+                email: form.customer_email,
               },
             };
           }
@@ -577,10 +584,7 @@ const checkoutView = {
                   country: form.shipping_country,
                 },
               },
-              ...authModel,
-              ...(!window.$store.user.user && {
-                orderAsGuest: form.orderAsGuest,
-              }),
+              ...customerModel,
             },
           })
             .then((res) => {
