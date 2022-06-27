@@ -665,7 +665,7 @@ const checkoutView = {
 								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem">${window.$t(
                   "view.checkout.shipping.headline"
                 )}</div>		
-								<div class="card-plain" id="storedShippingAddress">
+								<div class="card-plain" id="storedShippingAddress" style="display:none;">
                   <span></span>
                   <a id="shippingAddressEdit">Ändern</a>
                 </div>
