@@ -185,6 +185,7 @@ const templates = [
         api(`v1/shop/products/categories/${window.$route.params.product}`).then(
           (res) => {
             renderItems(res.data.products);
+            document.getElementById("category-title").innerHTML = res.data.title
             resolve();
           }
         );
@@ -201,13 +202,13 @@ const templates = [
 			    <div class="pt-48 flex mx-auto container" style="max-width: 1366px;">
 			    	<div class="hidden md:block w-1/4">
 			    		<div class="categories-sidebar">
-				    		<div class="headline">Products</div>
+				    		<div>Alle Kategorien</div>
 				    		<ul id="categoriesSidebar"></ul>
 				    	</div>
 			    	</div>
 			    	<div class="w-full md:w-3/4">
 				    	<div>
-				    		<div class="headline">Products</div>
+				    		<div class="headline" id="category-title"></div>
 				    	</div>
 				    	<div class="skeleton" id="items-skeleton"></div>
 				    	<div class="prdcts mt-20 view-transition category-product-list" id="items">
