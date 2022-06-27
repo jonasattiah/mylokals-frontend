@@ -140,16 +140,6 @@ templates[0] = {
       </div>
 			    <div style="margin-top: 4rem;">
 
-            <div class="hidden md:block" style="background: #FFE26A;padding: 2rem 0;">
-              <div class="container">
-    			    	<div>
-    			    		<div class="headline">Aus deiner Stadt</div>
-    			    	</div>
-                <div class="store-list" id="stores"></div>
-                <div class="button btn-s" style="margin-top: 2rem;">Mehr Geschäfte</div>
-              </div>
-            </div>
-
             <div class="container" style="margin-top: 4rem;padding: 2rem 1rem;">
               <div class="headline text-center" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
                 Das liefern wir                
@@ -191,6 +181,16 @@ templates[0] = {
                   </div>
                   <div class="text-center">Und vieles mehr</div>
                 </div>
+              </div>
+            </div>
+
+            <div class="hidden md:block" style="background: #FFE26A;padding: 2rem 0;margin-top: 16rem;">
+              <div class="container">
+                <div>
+                  <div class="headline">Aus deiner Stadt</div>
+                </div>
+                <div class="store-list" id="stores"></div>
+                <div class="button btn-s" style="margin-top: 2rem;">Mehr Geschäfte</div>
               </div>
             </div>
 
