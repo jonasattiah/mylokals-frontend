@@ -207,6 +207,19 @@ const basketApi = {
     });
   },
 };
+const searchApi = {
+  search: (term, options) => {
+    return new Promise((resolve) => {
+      api("sf/v1/search", {
+        query: {
+          term,
+        },
+      }).then((res) => {
+        resolve(res);
+      });
+    });
+  },
+};
 
 if (window.$store.auth.token) authApi.auth();
 

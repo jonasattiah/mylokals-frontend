@@ -57,13 +57,10 @@ const templates = [
   {
     name: "search",
     init: () => {
-      categoryApi
-        .fetchCategory("baby", {
-          limit: 100,
-        })
-        .then((res) => {
-          renderItems("items", res.data.products);
-        });
+      categoryApi;
+      searchApi.search(window.$route.query.s).then((res) => {
+        renderItems("items", res.data.results);
+      });
     },
     template: `
     <div class="container">
