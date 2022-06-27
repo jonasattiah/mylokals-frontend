@@ -72,6 +72,11 @@ document.getElementById("navItemBasket").addEventListener("click", () => {
 });
 
 const updateNavBasket = (basket) => {
+  if (!basket.quantity_count) {
+    document.getElementById("basketItemCount").style.display = "none";
+  } else {
+    document.getElementById("basketItemCount").style.display = "block";
+  }
   document.getElementById("basketItemCount").innerHTML = basket.quantity_count;
   document.getElementById("floatingBasketTotal").innerHTML =
     basket._totalWithVat;

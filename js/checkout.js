@@ -456,10 +456,11 @@ const checkoutView = {
 
       const clearSessions = () => {
         window.$store.basket.id = null;
-        window.$store.basket = null;
+        window.$store.basket.basket = null;
         removeCookie("basketId");
         window.$store.order.id = null;
         removeCookie("orderSessionId");
+        document.getElementById("basketItemCount").style.display = "none";
       };
 
       const confirmOrder = () => {
@@ -492,7 +493,7 @@ const checkoutView = {
             }
           })
           .catch((err) => {
-            if (err.data.errors) {
+            if (err.data && err.data.errors) {
               if (err.data.errors.paymentMethod)
                 document
                   .getElementById("checkout-errors")
@@ -781,7 +782,7 @@ const checkoutView = {
 								<div class="error-message" id="checkout-errors"></div>
 
 								<div style="margin-top: 1rem;">
-									<button class="button w-full" id="submit">
+									<button class="button btn-l w-full" id="submit">
 										${window.$t("view.checkout.submitOrder.button")}
 									</button>
 								</div>
