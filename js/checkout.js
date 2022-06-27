@@ -443,8 +443,13 @@ const checkoutView = {
           }
         });
 
+      if (window.$store.order.order.user) {
+        validation.items["email"] = null
+        validation.items["password"] = null
+      }
+      
       validation.valid = !Boolean(
-        Object.keys(validation.items).filter(
+        Object.keys(validation.items.filter(item => item)).filter(
           (item) => !validation.items[item].validation.valid
         ).length
       );
