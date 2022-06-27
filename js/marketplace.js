@@ -79,10 +79,10 @@ templates[0] = {
     mapboxgl.accessToken =
       "pk.eyJ1Ijoiam9lbmFzam8iLCJhIjoiY2o2M3k2NW96MWdpcTJybndtbmQ2aWtpYyJ9.9f0O8JplL4G6An4-ci8dQw";
     const map = new mapboxgl.Map({
-      container: "map", // container ID
-      style: "mapbox://styles/joenasjo/cjyfyl58q00rh1cs2gvz12lfn", // style URL
-      center: [6.551865, 51.188353], // starting position [lng, lat]
-      zoom: 11, // starting zoom
+      container: "map",
+      style: "mapbox://styles/joenasjo/cjyfyl58q00rh1cs2gvz12lfn",
+      center: [6.583, 51.09],
+      zoom: 12,
     });
     window.map = map;
 
