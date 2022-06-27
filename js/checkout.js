@@ -111,6 +111,7 @@ let stripe = {
 const checkoutView = {
   name: "checkout",
   init: () => {
+    removeCookie("showFloatingBasket")
     hideFloatingBasket(true);
     const elErrors = document.getElementById("checkout-errors");
     const elPaymentErrors = document.getElementById("payment-errors");
