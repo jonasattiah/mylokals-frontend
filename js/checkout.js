@@ -277,12 +277,14 @@ const checkoutView = {
             if (res.data.user) {
               elLoginBtn.style.display = "none";
               document.getElementById("shippingFields").style.display = "none";
-              document.getElementById("storedShippingAddress").querySelector("span").innerHTML =
-                res.data._shippingAddress;
+              document
+                .getElementById("storedShippingAddress")
+                .querySelector("span").innerHTML = res.data._shippingAddress;
               document.getElementById("storedShippingAddress").style.display =
                 "block";
               document.getElementById("customer_email").style.display = "none";
-              document.getElementById("customer_password").style.display = "none";
+              document.getElementById("customer_password").style.display =
+                "none";
               document.getElementById("orderAsGuestRow").style.display = "none";
             }
             if (res.data.shipping_address) {
@@ -331,10 +333,12 @@ const checkoutView = {
       });
     };
 
-    document.getElementById("shippingAddressEdit").addEventListener("click", () => {
-      document.getElementById("storedShippingAddress").style.display = "none";
-      document.getElementById("shippingFields").style.display = "block";
-    })
+    document
+      .getElementById("shippingAddressEdit")
+      .addEventListener("click", () => {
+        document.getElementById("storedShippingAddress").style.display = "none";
+        document.getElementById("shippingFields").style.display = "block";
+      });
 
     fetchCheckout();
 

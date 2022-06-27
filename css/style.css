@@ -314,6 +314,7 @@ button:disabled {
 }
 .bskt-items .prdct-itm_img {
   max-width: 64px;
+  flex: none;
 }
 .bskt-items .prdct-itm-details {
   margin-left: 0.5rem;
