@@ -545,6 +545,7 @@ const checkoutView = {
             }
           });
         }
+        loading(false);
       };
 
       const updateOrder = () => {
