@@ -27,7 +27,7 @@
   --logo_height: 42px;
 
   --navigation_background: transparent;
-  --navigation_padding: 1.5rem 1rem;
+  --navigation_padding: 1.5rem 0;
 
   --product-list-cols: 2;
 }
@@ -125,9 +125,9 @@ a {
 }
 .btn-l {
   font-size: 16px;
-  height: 46px;
-  line-height: 46px;
-  padding: 0 1.5rem;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 1.75rem;
 }
 button:disabled {
   opacity: 0.5;
@@ -164,7 +164,6 @@ button:disabled {
   color: #000;
 }
 .nav li a.active {
-  text-decoration: underline;
   color: #1d5ac5;
 }
 .nav li:last-child a {
@@ -549,6 +548,9 @@ div#card-element {
   }
 }
 @media (min-width: 768px) {
+  :root {
+    --logo_height: 50px;
+  }
   .md\:block {
     display: block;
   }

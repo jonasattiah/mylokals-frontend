@@ -185,7 +185,8 @@ const templates = [
         api(`v1/shop/products/categories/${window.$route.params.product}`).then(
           (res) => {
             renderItems(res.data.products);
-            document.getElementById("category-title").innerHTML = res.data.title
+            document.getElementById("category-title").innerHTML =
+              res.data.title;
             resolve();
           }
         );

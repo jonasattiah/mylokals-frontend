@@ -147,40 +147,43 @@ templates[0] = {
               <div class="home-categories-grid">
                 <div>
                   <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
-                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                    <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba076a37565f5f748954a6/a2bd55dd24ee251b2d3706d270b9a59305cad35f77d15b39.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
-                  <div class="text-center">Lebensmittel</div>
+                  <div class="text-center" style="margin-top: 1rem;">Lebensmittel</div>
                 </div>
                 <div>
                   <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
-                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                    <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba09f837565f5f748954b4/b6eb525b6ae13253bfac5e725f7eba40410ed07b6d9d857d.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
-                  <div class="text-center">Drogerieartikel</div>
+                  <div class="text-center" style="margin-top: 1rem;">Drogerie</div>
                 </div>
                 <div>
                   <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
-                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                    <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba0a5e37565f5f748954b9/a5409083aaf495dabca59c4de6396613232cb8ab3b4fc7f4.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
-                  <div class="text-center">Bücher</div>
+                  <div class="text-center" style="margin-top: 1rem;">Haushalt</div>
                 </div>
                 <div>
                   <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
-                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                    <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba2eaa37565f5f748954e8/7df1282a9643b5ef4950d49fd0f99a8594af5baef3f6ee0c.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
-                  <div class="text-center">Fashion</div>
+                  <div class="text-center" style="margin-top: 1rem;">Wohnen</div>
                 </div>
                 <div>
                   <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
-                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                    <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba303537565f5f748954ee/5a54902ba6c8d48cfc8a7d0dc7f74e37979960262b1401c7.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
-                  <div class="text-center">Medikamente</div>
+                  <div class="text-center" style="margin-top: 1rem;">Elektronik</div>
                 </div>
                 <div>
                   <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
-                    <img src="http://localhost:3001/api/v1/images/5fe7907a77d26a45c1a51c51/62b07d12e7879a56b280f26e/1dacd5cae457c7a88fa319378f1dea8a85d42e00e3ae8b50.png?height=330&width=310&size=1" style="width: 100%;border-radius: 6px;">
+                    <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba310a37565f5f748954f2/96d7330e5351b343a48f4710525aa0cf45a9398be5a67ff5.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
-                  <div class="text-center">Und vieles mehr</div>
+                  <div class="text-center" style="margin-top: 1rem;">Und vieles mehr</div>
                 </div>
+              </div>
+              <div class="text-center" style="margin-top: 4rem;">
+                <a>Alle Kategorien anzeigen</a>
               </div>
             </div>
 
