@@ -127,6 +127,7 @@
   width: 100%;
   text-align: right;
   justify-content: end;
+  margin: 0;
 }
 .floating-basket .prdct-itm_img {
   max-width: 96px;

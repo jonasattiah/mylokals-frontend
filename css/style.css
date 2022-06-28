@@ -241,6 +241,7 @@ button:disabled {
 .categories-sidebar li a {
   padding: 0.5rem;
   cursor: pointer;
+  color: #000;
 }
 .categories-sidebar li:hover a {
   color: #ccc;

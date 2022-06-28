@@ -2,7 +2,7 @@ templates[0] = {
   name: "index",
   init: () => {
     categoryApi
-      .fetchCategory("baby", {
+      .fetchCategory("lebensmittel", {
         limit: 10,
       })
       .then((res) => {
@@ -93,15 +93,15 @@ templates[0] = {
     const stores = [
       {
         bannerUrl:
-          "http://localhost:3001/api/v1/images/61333f5373221b71f7fac992/2021-09-04/6ac057f8070ea81d3f417018e6c450672de885fb60c5bc8e.jpeg",
+          "https://api.mylokals.de/api/v1/images/61420a26fa66d79da38ad6eb/2021-09-15/8da745f45e31c1b0efddbb6a5969551fd62bb2aef4776ad9.jpeg",
+      },
+      {
+        bannerUrl:
+          "https://api.mylokals.de/api/v1/images/61333f5373221b71f7fac992/2021-09-15/12401cdae14f40bc21daab934c446fe32fc6dc66a5f42326.jpeg",
       },
       {
         bannerUrl:
           "https://api.mylokals.de/api/v1/images/614209a5fa66d79da38ad6e8/2021-09-24/eb46697dda24e67b131c2f1234c4bd9dd6c6f291af2d4f17.jpeg",
-      },
-      {
-        bannerUrl:
-          "https://api.mylokals.de/api/v1/images/61420a26fa66d79da38ad6eb/2021-09-15/8da745f45e31c1b0efddbb6a5969551fd62bb2aef4776ad9.jpeg",
       },
     ];
 

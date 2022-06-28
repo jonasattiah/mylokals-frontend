@@ -87,8 +87,8 @@ const templates = [
     name: "store",
     init: () => {
       categoryApi
-        .fetchCategory("baby", {
-          limit: 10,
+        .fetchCategory("lebensmittel", {
+          limit: 100,
         })
         .then((res) => {
           renderItems("items", res.data.products);
@@ -115,18 +115,18 @@ const templates = [
                 <div class="store-list-item" style="width:100%;max-width: 500px;">
                   <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;" route="/store">
                     <div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;">
-                      <div class="store-card-banner" style="background: url('http://localhost:3001/api/v1/images/61333f5373221b71f7fac992/2021-09-04/6ac057f8070ea81d3f417018e6c450672de885fb60c5bc8e.jpeg?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
+                      <div class="store-card-banner" style="background: url('https://api.mylokals.de/api/v1/images/61420a26fa66d79da38ad6eb/2021-09-15/8da745f45e31c1b0efddbb6a5969551fd62bb2aef4776ad9.jpeg?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
                     </div>
                   </div>
                 </div>
                 <div style="margin-left: 1rem;">
-                  <div class="headline" style="margin-bottom: .5rem;">Buch und Spiel kiste</div>
-                  <div>Bücher, Spielzeug</div>
+                  <div class="headline" style="margin-bottom: .5rem;">Becker Obst und Gemüse</div>
+                  <div>Obst, Gemüse</div>
                 </div>
               </div>
 
               <div class="md:flex" style="margin-top: 4rem;">
-                <ul class="hidden md:block" id="categoriesSidebar" style="max-width: 200px;width: 100%;padding-right: 1rem;"></ul>
+                <ul class="hidden" id="categoriesSidebar" style="max-width: 200px;width: 100%;padding-right: 1rem;"></ul>
                 <div>
                   <div class="w-2/3 md:w-1/2" style="margin-bottom: 1rem;">
                     <div class="form-field form-field-search">
@@ -155,14 +155,14 @@ const templates = [
           items.forEach((item) => {
             const preview_image = item.images[0] ? item.images[0].url : null;
             const template = `
-						    	<a class="prdct-itm" route="/product/${item.key}">
+						    	<div class="prdct-itm" route="/product/${item.key}">
 						    		<div class="prdct-itm_img">
 						    			<img src="${preview_image}?height=330&width=310&size=1"/>
 						    		</div>
 						    		<div>${item.name}</div>
 						    		<div>${item._priceWithTax}</div>
 						    		<!--<div class="flex justify-center"><a class="prdct-itm_cart-btn button btn-s" href="https://twitter.com/jonasatia" target="_blank" rel="noopener">Add to cart</a></div>-->
-						    	</a>
+						    	</div>
 						      `;
 
             let component = document.createElement("div");
