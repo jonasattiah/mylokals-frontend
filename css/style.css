@@ -136,6 +136,9 @@ button:disabled {
 .logo {
   height: var(--logo_height);
   margin-right: 0.5rem;
+  color: #000;
+  font-size: 24px;
+  font-family: "basiersquare";
 }
 .logo img {
   height: 100%;
