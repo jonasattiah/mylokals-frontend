@@ -374,13 +374,60 @@ const templates = [
   ...[checkoutView],
   {
     name: "orderConfirmation",
-    init: () => {},
+    init: () => {
+      function renderItems(targetId, items) {
+        if (!items.length) {
+          document.getElementById(targetId).innerHTML =
+            "No Products available.";
+          return;
+        }
+        items.forEach((item) => {
+          const template = `
+              <div class="prdct-itm flex">
+                <div class="prdct-itm_img">
+                  <img src="${item.image_url}?height=330&width=310&size=1" style="width:96px;"/>
+                </div>
+                <div style="padding-left: .5rem;">
+                  <div>${item.name}</div>
+                  <div>${item._totalAmount}</div>
+                </div>
+              </div>
+              `;
+
+          let component = document.createElement("div");
+          component.innerHTML = template;
+          component.classList.add("item");
+
+          document.getElementById(targetId).appendChild(component);
+        });
+      }
+
+      api("sf/v1/order", {
+        query: {
+          k: window.$route.query.k,
+        },
+      })
+        .then((res) => {
+          renderItems("items", res.data.items);
+        })
+        .catch((err) => {});
+    },
     template: `
-				    <div class="pt-48 text-center">
-				    	<div>
-				    		<div class="headline">Danke für deine Bestellung.</div>
-				    	</div>
-				    	<a class="button" href="/">Zum Shop</a>
+				    <div class="container" style="padding-top: 5rem;">
+              <div style="font-size: 64px;text-align:center;margin-bottom: 1rem;">🎉</div>
+              <div class="p-3 mx-auto" style="max-width: 600px;position:relative;margin-bottom: .5rem;display:flex;">
+              <div>
+                <div class="headline" style="font-weight: 600;margin-bottom: 1.5rem;line-height: 24px;">
+                  Deine Bestellung
+                </div>
+                <div>
+                  Lieferung
+                  <div style="color: #1e5ac5;">Heute zwischen 17:00 - 19:00 Uhr</div>
+                </div>
+                <div id="items" style="margin-top: 2rem;"></div>
+              </div>
+            </div>
+
 				    </div>
 				`,
   },

@@ -122,7 +122,7 @@ templates[0] = {
     ]);
   },
   template: `
-      <div class="container md:flex items-center">
+      <div class="container md:flex items-center" style="padding-top: 1rem;">
           <div class="md:w-1/2">
             <div class="headline text-center" style="text-align: left;font-size: 48px;line-height: 47px;margin-bottom: 0.5rem;">
               Wir liefern<br>

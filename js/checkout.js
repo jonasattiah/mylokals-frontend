@@ -485,13 +485,13 @@ const checkoutView = {
               case "invoice":
                 if (res.status === 201) {
                   clearSessions();
-                  return changeRoute("/order");
+                  return changeRoute("/order?k=" + res.data.order_key);
                 }
                 break;
               case "stripe":
                 if (res.status === 201) {
                   clearSessions();
-                  return changeRoute("/order");
+                  return changeRoute("/order?k=" + res.data.order_key);
                 }
                 break;
               default:
