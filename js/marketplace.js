@@ -255,7 +255,7 @@ templates[0] = {
               </div>
             </div>
 
-            <div class="hidden md:block" style="margin-top: 16rem;">
+            <div class="hidden" style="margin-top: 16rem;">
               <div class="container">
                 <div style="background: #FFE26A;padding: 2rem;border-radius:6px;">
                   <div>
