@@ -259,28 +259,6 @@ function renderItems(targetId, items) {
     linkListener();
   });
 }
-function renderStores(targetId, items) {
-  if (!items.length) {
-    document.getElementById(targetId).innerHTML = "No Products available.";
-    return;
-  }
-  items.forEach((item) => {
-    const template = `
-              <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;" route="/store">
-                <div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;">
-                  <div class="store-card-banner" style="background: url('${item.bannerUrl}?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
-                </div>
-              </div>
-              `;
-
-    let component = document.createElement("div");
-    component.innerHTML = template;
-    component.classList.add("store-list-item");
-
-    document.getElementById(targetId).appendChild(component);
-    linkListener();
-  });
-}
 function renderBasketItems(items, targetId) {
   document.getElementById(targetId).innerHTML = "";
   items.forEach((item) => {

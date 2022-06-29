@@ -1,13 +1,30 @@
 templates[0] = {
   name: "index",
   init: () => {
-    categoryApi
-      .fetchCategory("lebensmittel", {
-        limit: 10,
-      })
-      .then((res) => {
-        renderItems("items", res.data.products);
-      });
+    const availableCities = [
+      {
+        name: "Grevenbroich",
+        key: "grevenbroich",
+        coordinates: [6.583, 51.09],
+      },
+      {
+        name: "Korschenbroich",
+        key: "korschenbroich",
+        coordinates: [6.5535597, 51.1854975],
+      },
+      {
+        name: "Neuss",
+        key: "neuss",
+        coordinates: [6.6715195, 51.1761706],
+      },
+      {
+        name: "In ganz Deutschland suchen",
+        key: "DE",
+      },
+    ];
+    let currentCity = getCookie("cuCity")
+      ? availableCities.find((city) => city.key === getCookie("cuCity"))
+      : availableCities[0];
 
     const addMarkers = (markers) => {
       markers.reverse().forEach((marker) => {
@@ -81,10 +98,33 @@ templates[0] = {
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/joenasjo/cjyfyl58q00rh1cs2gvz12lfn",
-      center: [6.583, 51.09],
+      center: currentCity.coordinates,
       zoom: 12,
     });
     window.map = map;
+
+    function renderStores(targetId, items) {
+      if (!items.length) {
+        document.getElementById(targetId).innerHTML = "No Products available.";
+        return;
+      }
+      items.forEach((item) => {
+        const template = `
+                  <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;" route="/store">
+                    <div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 6px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;">
+                      <div class="store-card-banner" style="background: url('${item.bannerUrl}?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 6px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
+                    </div>
+                  </div>
+                  `;
+
+        let component = document.createElement("div");
+        component.innerHTML = template;
+        component.classList.add("store-list-item");
+
+        document.getElementById(targetId).appendChild(component);
+        linkListener();
+      });
+    }
 
     // api("mylokals/v1/stores?location=41352").then((res) => {
 
@@ -146,24 +186,7 @@ templates[0] = {
     }
     if (!getCookie("cuCity")) {
       document.getElementById("citySearch").style.display = "block";
-      renderCityList([
-        {
-          name: "Grevenbroich",
-          key: "grevenbroich",
-        },
-        {
-          name: "Korschenbroich",
-          key: "korschenbroich",
-        },
-        {
-          name: "Neuss",
-          key: "neuss",
-        },
-        {
-          name: "In ganz Deutschland suchen",
-          key: "DE",
-        },
-      ]);
+      renderCityList(availableCities);
     }
   },
   template: `
@@ -232,27 +255,28 @@ templates[0] = {
               </div>
             </div>
 
-            <div class="hidden md:block" style="background: #FFE26A;padding: 2rem 0;margin-top: 16rem;">
+            <div class="hidden md:block" style="margin-top: 16rem;">
               <div class="container">
-                <div>
-                  <div class="headline">Aus deiner Stadt</div>
+                <div style="background: #FFE26A;padding: 2rem;border-radius:6px;">
+                  <div>
+                    <div class="headline">Aus deiner Stadt</div>
+                  </div>
+                  <div class="store-list" id="stores"></div>
                 </div>
-                <div class="store-list" id="stores"></div>
-                <div class="button btn-s" style="margin-top: 2rem;">Mehr Geschäfte</div>
               </div>
             </div>
 
             <div style="margin-top: 8rem;padding: 8rem 0;">
-              <div class="headline text-center" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
-                Wie funktioniert MyLokals?
+              <div class="container md:flex items-center">
+                <div class="md:w-1/2">
+                  <img class="w-full" src="https://cdn.purdia.com/mylokals/giftcard-hand.svg">
+                </div>
+                <div class="md:w-1/2">
+                  <div class="headline" style="font-size: 50px;line-height: 50px;margin-bottom:3rem;">
+                    Lokal kaufen<br>Gutschein gewinnen.
+                  </div>
+                </div>
               </div>
-            </div>
-            
-            <div class="container">
-              <div style="margin-top: 8rem;">
-                <div class="headline">Produkte</div>
-              </div>
-  			    	<div class="prdcts mt-20 view-transition" id="items"></div>
             </div>
 			    </div>
           <div class="modal hidden" id="citySearch">
