@@ -120,6 +120,51 @@ templates[0] = {
         coordinates: [6.513069, 51.190269],
       },
     ]);
+
+    function renderCityList(items) {
+      items.forEach((item) => {
+        const template = `
+              <input name="city" value="${item.key}" type="radio">
+              ${item.name}
+              `;
+
+        let el = document.createElement("label");
+        el.className = "list-item";
+        el.innerHTML = template;
+        if (item.selected) {
+          el.querySelector("input").checked = true;
+          window.$store.checkout.selectedPaymentMethod = item.key;
+          el.classList.add("active");
+        }
+        el.addEventListener("change", (e) => {
+          setCookie("cuCity", e.target.value);
+          changeRoute("/");
+        });
+
+        document.getElementById("cities").appendChild(el);
+      });
+    }
+    if (!getCookie("cuCity")) {
+      document.getElementById("citySearch").style.display = "block";
+      renderCityList([
+        {
+          name: "Grevenbroich",
+          key: "grevenbroich",
+        },
+        {
+          name: "Korschenbroich",
+          key: "korschenbroich",
+        },
+        {
+          name: "Neuss",
+          key: "neuss",
+        },
+        {
+          name: "In ganz Deutschland suchen",
+          key: "DE",
+        },
+      ]);
+    }
   },
   template: `
       <div class="container md:flex items-center" style="padding-top: 1rem;">
@@ -210,5 +255,24 @@ templates[0] = {
   			    	<div class="prdcts mt-20 view-transition" id="items"></div>
             </div>
 			    </div>
+          <div class="modal hidden" id="citySearch">
+            <div class="modal-body">
+                <div class="headline">Suche deine Stadt</div>
+                <div class="form-field form-field-search">
+                  <input
+                    class="form-field-input"
+                    name="city-search"
+                    id="city-search"
+                    placeholder="Stadt order PLZ"
+                  />
+                  <img
+                    id="searchButton"
+                    class="search-icon"
+                    src="https://cdn.purdia.com/mylokals/icons/search.svg"
+                  />
+                </div>
+                <ul class="list" style="margin-top: 1rem;" id="cities"></ul>
+            </div>
+          </div>
 				`,
 };
