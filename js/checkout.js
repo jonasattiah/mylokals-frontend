@@ -674,7 +674,7 @@ const checkoutView = {
               </div>
             </div>
 						<div class="card p-3" style="max-width: 600px;position:relative;">
-              <div class="button btn-gray" style="margin-bottom: 1rem;border-radius: 999px;width:100%;" id="login-btn">Login</div>
+              <div class="button btn-gray" style="margin-bottom: 1rem;width:100%;" id="login-btn">Login</div>
               <div id="login-form"></div>
 							<form id="checkout-form" action="javascript:;" autocomplete="on" novalidate>
 								<!--
