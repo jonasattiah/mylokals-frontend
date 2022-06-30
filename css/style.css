@@ -268,10 +268,19 @@ button:disabled {
   border-radius: 6px;
   margin-bottom: 0.25rem;
   position: relative;
+  height: 0px;
+  padding-bottom: 99%;
+  position: relative;
 }
 .prdct-itm_img img {
-  width: 100%;
   border-radius: 6px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  object-fit: contain;
 }
 .prdct-itm_cart-btn {
   position: absolute;
@@ -320,7 +329,9 @@ button:disabled {
   display: flex;
 }
 .bskt-items .prdct-itm_img {
-  max-width: 64px;
+  width: 64px;
+  height: 64px;
+  padding: 0;
   flex: none;
 }
 .bskt-items .prdct-itm-details {
@@ -637,7 +648,10 @@ div#card-element {
     flex-flow: column;
   }
   .bskt-items .prdct-itm_img {
+    width: 96px;
     max-width: 96px;
+    height: 96px;
+    padding: 0;
   }
   .form-card-select {
     display: grid;
