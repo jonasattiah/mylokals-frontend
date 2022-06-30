@@ -221,45 +221,45 @@ templates[0] = {
           </div>
         </div>
       </div>
-			    <div style="margin-top: 4rem;">
+			    <div>
 
-            <div class="container" style="margin-top: 4rem;padding: 2rem 1rem;">
+            <div class="container" style="padding: 10rem 1rem;">
               <div class="headline text-center hidden" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
                 Das liefern wir                
               </div>
               <div class="home-categories-grid">
                 <div>
-                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                  <div route="/kategorie/lebensmittel" style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
                     <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba076a37565f5f748954a6/a2bd55dd24ee251b2d3706d270b9a59305cad35f77d15b39.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
                   <div class="text-center" style="margin-top: 1rem;">Lebensmittel</div>
                 </div>
                 <div>
-                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                  <div route="/kategorie/drogerie" style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
                     <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba09f837565f5f748954b4/b6eb525b6ae13253bfac5e725f7eba40410ed07b6d9d857d.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
                   <div class="text-center" style="margin-top: 1rem;">Drogerie</div>
                 </div>
                 <div>
-                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                  <div route="/kategorie/haushalt" style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
                     <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba0a5e37565f5f748954b9/a5409083aaf495dabca59c4de6396613232cb8ab3b4fc7f4.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
                   <div class="text-center" style="margin-top: 1rem;">Haushalt</div>
                 </div>
                 <div>
-                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                  <div route="/kategorie/wohnen" style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
                     <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba2eaa37565f5f748954e8/7df1282a9643b5ef4950d49fd0f99a8594af5baef3f6ee0c.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
                   <div class="text-center" style="margin-top: 1rem;">Wohnen</div>
                 </div>
                 <div>
-                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                  <div route="/kategorie/elektronik" style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
                     <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba303537565f5f748954ee/5a54902ba6c8d48cfc8a7d0dc7f74e37979960262b1401c7.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
                   <div class="text-center" style="margin-top: 1rem;">Elektronik</div>
                 </div>
                 <div>
-                  <div style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
+                  <div route="/kategorie/alles" style="background: radial-gradient(#fff, #f5f5f5);border-radius: 6px;">
                     <img src="https://integration.api.perdia.de/api/v1/images/5fe7907a77d26a45c1a51c51/62ba310a37565f5f748954f2/96d7330e5351b343a48f4710525aa0cf45a9398be5a67ff5.png?height=310&width=310&size=1" style="width: 100%;border-radius: 6px;">
                   </div>
                   <div class="text-center" style="margin-top: 1rem;">Und vieles mehr</div>
@@ -278,7 +278,7 @@ templates[0] = {
               </div>
             </div>
 
-            <div style="margin-top: 8rem;padding: 8rem 0;">
+            <div style="padding: 8rem 0;">
               <div class="container md:flex items-center">
                 <div class="md:w-1/2">
                   <img class="w-full" src="https://cdn.purdia.com/mylokals/giftcard-hand.svg">

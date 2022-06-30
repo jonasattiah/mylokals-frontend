@@ -96,7 +96,7 @@ const templates = [
 
       const renderSidebarItems = (items) => {
         items.forEach((item) => {
-          const template = `<a class="" route="/category/${item.key}">${item.name}</a>`;
+          const template = `<a class="" route="/kategorie/${item.key}">${item.name}</a>`;
           let component = document.createElement("li");
           component.innerHTML = template;
           component.classList.add("item");
@@ -155,7 +155,7 @@ const templates = [
           items.forEach((item) => {
             const preview_image = item.images[0] ? item.images[0].url : null;
             const template = `
-						    	<div class="prdct-itm" route="/product/${item.key}">
+						    	<div class="prdct-itm" route="/produkt/${item.key}">
 						    		<div class="prdct-itm_img">
 						    			<img src="${preview_image}?height=330&width=310&size=1"/>
 						    		</div>
@@ -174,7 +174,7 @@ const templates = [
         }
         const renderSidebarItems = (items) => {
           items.forEach((item) => {
-            const template = `<a class="" route="/category/${item.key}">${item.name}</a>`;
+            const template = `<a class="" route="/kategorie/${item.key}">${item.name}</a>`;
             let component = document.createElement("li");
             component.innerHTML = template;
             component.classList.add("item");
@@ -363,7 +363,7 @@ const templates = [
 					    	</div>
 					    	<div class="md:w-1/2">
 					    		<div class="prdcts bskt-items mt-20" id="items" style="margin-bottom: 1rem;"></div>
-					    		<a class="button w-full" route="/checkout" id="toCheckoutButton">${window.$t(
+					    		<a class="button w-full" route="/kasse" id="toCheckoutButton">${window.$t(
                     "view.basket.button"
                   )}</a>
 					    	</div>

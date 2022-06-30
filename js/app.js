@@ -126,7 +126,7 @@ const categoryApi = {
       categories
         .filter((c) => !c.parent)
         .forEach((item) => {
-          const template = `<a route="/category/${item.key}">${item.name}</a>`;
+          const template = `<a route="/kategorie/${item.key}">${item.name}</a>`;
           let component = document.createElement("li");
           component.innerHTML = template;
           component.classList.add("item");
@@ -139,6 +139,10 @@ const categoryApi = {
         renderCategories(
           res.data.categories,
           document.getElementsByClassName("navCategories")[0]
+        );
+        renderCategories(
+          res.data.categories,
+          document.getElementsByClassName("navCategories")[1]
         );
         resolve(res);
       });
@@ -234,7 +238,7 @@ function renderItems(targetId, items) {
   items.forEach((item) => {
     const preview_image = item.images[0] ? item.images[0].url : null;
     const template = `
-				    	<div class="prdct-itm" route="/product/${item.key}">
+				    	<div class="prdct-itm" route="/produkt/${item.key}">
 				    		<div class="prdct-itm_img">
 				    			<img src="${preview_image}?height=330&width=310&size=1"/>
                   <a class="prdct-itm_cart-btn button btn-s">
@@ -357,12 +361,12 @@ const routes = [
     view: "store",
   },
   {
-    path: "/category/:category",
+    path: "/kategorie/:category",
     key: "category",
     view: "category",
   },
   {
-    path: "/product/:product",
+    path: "/produkt/:product",
     key: "product",
     view: "product",
   },
@@ -372,7 +376,7 @@ const routes = [
     view: "basket",
   },
   {
-    path: "/checkout",
+    path: "/kasse",
     key: "checkout",
     view: "basket",
   },
