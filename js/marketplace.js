@@ -1,32 +1,101 @@
+const elNavSearch = document.getElementById("nav-search");
+const availableCities = [
+  {
+    name: "Grevenbroich",
+    key: "grevenbroich",
+    coordinates: [6.583, 51.09],
+  },
+  {
+    name: "Korschenbroich",
+    key: "korschenbroich",
+    coordinates: [6.5535597, 51.1854975],
+  },
+  {
+    name: "Neuss",
+    key: "neuss",
+    coordinates: [6.6715195, 51.1761706],
+  },
+  {
+    name: "In ganz Deutschland suchen",
+    key: "DE",
+  },
+];
+let currentCity = getCookie("cuCity")
+  ? availableCities.find((city) => city.key === getCookie("cuCity"))
+  : availableCities[0];
+
+const renderLocationChangeModal = () => {
+  let el = document.createElement("div");
+  const template = `<div class="modal hidden" id="citySearch">
+            <div class="modal-body">
+                <div class="headline">Suche deine Stadt</div>
+                <div class="form-field form-field-search">
+                  <input
+                    class="form-field-input"
+                    name="city-search"
+                    id="city-search"
+                    placeholder="Stadt order PLZ"
+                  />
+                  <img
+                    id="searchButton"
+                    class="search-icon"
+                    src="https://cdn.purdia.com/mylokals/icons/search.svg"
+                  />
+                </div>
+                <ul class="list" style="margin-top: 1rem;" id="cities"></ul>
+            </div>
+          </div>`;
+  el.innerHTML = template;
+
+  document.getElementById("app").appendChild(el);
+  window.addEventListener("click", () => {
+    elNavSearch.querySelector(".dropdown").style.display = "none";
+    elNavSearch.classList.remove("expanded");
+  });
+  elNavSearch.addEventListener("click", (e) => {
+    e.stopPropagation();
+    elNavSearch.querySelector(".dropdown").style.display = "block";
+    elNavSearch.classList.add("expanded");
+  });
+};
+renderLocationChangeModal();
+
+function renderCityList(items) {
+  document.getElementById("cities").innerHTML = "";
+  items.forEach((item) => {
+    const template = `
+              <input name="city" value="${item.key}" type="radio">
+              ${item.name}
+              `;
+
+    let el = document.createElement("label");
+    el.className = "list-item";
+    el.innerHTML = template;
+    if (item.selected) {
+      el.querySelector("input").checked = true;
+      window.$store.checkout.selectedPaymentMethod = item.key;
+      el.classList.add("active");
+    }
+    el.addEventListener("change", (e) => {
+      setCookie("cuCity", e.target.value);
+      document.getElementById("citySearch").style.display = "none";
+    });
+
+    document.getElementById("cities").appendChild(el);
+  });
+}
+document.getElementById("change-location").addEventListener("click", () => {
+  renderCityList(availableCities);
+  document.getElementById("citySearch").style.display = "block";
+});
+if (!getCookie("cuCity")) {
+  document.getElementById("citySearch").style.display = "block";
+  renderCityList(availableCities);
+}
+
 templates[0] = {
   name: "index",
   init: () => {
-    const elNavSearch = document.getElementById("nav-search");
-    const availableCities = [
-      {
-        name: "Grevenbroich",
-        key: "grevenbroich",
-        coordinates: [6.583, 51.09],
-      },
-      {
-        name: "Korschenbroich",
-        key: "korschenbroich",
-        coordinates: [6.5535597, 51.1854975],
-      },
-      {
-        name: "Neuss",
-        key: "neuss",
-        coordinates: [6.6715195, 51.1761706],
-      },
-      {
-        name: "In ganz Deutschland suchen",
-        key: "DE",
-      },
-    ];
-    let currentCity = getCookie("cuCity")
-      ? availableCities.find((city) => city.key === getCookie("cuCity"))
-      : availableCities[0];
-
     const addMarkers = (markers) => {
       markers.reverse().forEach((marker) => {
         if (!document.getElementById("map_marker_" + marker.id)) {
@@ -161,48 +230,6 @@ templates[0] = {
         coordinates: [6.513069, 51.190269],
       },
     ]);
-
-    function renderCityList(items) {
-      document.getElementById("cities").innerHTML = "";
-      items.forEach((item) => {
-        const template = `
-              <input name="city" value="${item.key}" type="radio">
-              ${item.name}
-              `;
-
-        let el = document.createElement("label");
-        el.className = "list-item";
-        el.innerHTML = template;
-        if (item.selected) {
-          el.querySelector("input").checked = true;
-          window.$store.checkout.selectedPaymentMethod = item.key;
-          el.classList.add("active");
-        }
-        el.addEventListener("change", (e) => {
-          setCookie("cuCity", e.target.value);
-          changeRoute("/");
-        });
-
-        document.getElementById("cities").appendChild(el);
-      });
-    }
-    document.getElementById("change-location").addEventListener("click", () => {
-      renderCityList(availableCities);
-      document.getElementById("citySearch").style.display = "block";
-    });
-    if (!getCookie("cuCity")) {
-      document.getElementById("citySearch").style.display = "block";
-      renderCityList(availableCities);
-    }
-    window.addEventListener("click", () => {
-      elNavSearch.querySelector(".dropdown").style.display = "none";
-      elNavSearch.classList.remove("expanded");
-    });
-    elNavSearch.addEventListener("click", (e) => {
-      e.stopPropagation();
-      elNavSearch.querySelector(".dropdown").style.display = "block";
-      elNavSearch.classList.add("expanded");
-    });
   },
   template: `
       <div class="banner container md:flex items-center" style="padding-top: 1rem;">
@@ -291,24 +318,5 @@ templates[0] = {
               </div>
             </div>
 			    </div>
-          <div class="modal hidden" id="citySearch">
-            <div class="modal-body">
-                <div class="headline">Suche deine Stadt</div>
-                <div class="form-field form-field-search">
-                  <input
-                    class="form-field-input"
-                    name="city-search"
-                    id="city-search"
-                    placeholder="Stadt order PLZ"
-                  />
-                  <img
-                    id="searchButton"
-                    class="search-icon"
-                    src="https://cdn.purdia.com/mylokals/icons/search.svg"
-                  />
-                </div>
-                <ul class="list" style="margin-top: 1rem;" id="cities"></ul>
-            </div>
-          </div>
 				`,
 };
