@@ -362,7 +362,7 @@ const templates = [
 					    		<div id="checkoutView"></div>
 					    	</div>
 					    	<div class="md:w-1/2">
-					    		<div class="prdcts bskt-items mt-20" id="items" style="margin-bottom: 1rem;"></div>
+					    		<div class="bskt-items mt-20" id="items" style="margin-bottom: 1rem;"></div>
 					    		<a class="button w-full" route="/kasse" id="toCheckoutButton">${window.$t(
                     "view.basket.button"
                   )}</a>
