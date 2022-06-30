@@ -161,9 +161,24 @@
 .navCategories.nav li a:hover {
   background: #dfe8f0;
 }
+#nav-search {
+  height: 50px;
+}
+
 .form-field-search .form-field-input {
   background: #f7f7f7;
   border-color: #f7f7f7;
+}
+
+.banner .headline {
+  text-align: left;
+  font-size: 36px;
+  line-height: 38px;
+  margin-bottom: 0.5rem;
+}
+.banner .subheadline {
+  font-size: 19px;
+  margin-bottom: 4rem;
 }
 
 @media (min-width: 768px) {
@@ -178,5 +193,21 @@
     right: 15px;
     top: 15px;
     cursor: pointer;
+  }
+  .banner .headline {
+    font-size: 48px;
+    line-height: 47px;
+    margin-bottom: 0.5rem;
+  }
+  .banner .subheadline {
+    font-size: 24px;
+    margin-bottom: 4rem;
+  }
+}
+@media (max-width: 768px) {
+  .expanded .form-field-search {
+    position: absolute;
+    z-index: 40;
+    width: calc(100% - 2rem);
   }
 }

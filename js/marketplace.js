@@ -1,6 +1,7 @@
 templates[0] = {
   name: "index",
   init: () => {
+    const elNavSearch = document.getElementById("nav-search");
     const availableCities = [
       {
         name: "Grevenbroich",
@@ -188,15 +189,24 @@ templates[0] = {
       document.getElementById("citySearch").style.display = "block";
       renderCityList(availableCities);
     }
+    window.addEventListener("click", () => {
+      elNavSearch.querySelector(".dropdown").style.display = "none";
+      elNavSearch.classList.remove("expanded");
+    });
+    elNavSearch.addEventListener("click", (e) => {
+      e.stopPropagation();
+      elNavSearch.querySelector(".dropdown").style.display = "block";
+      elNavSearch.classList.add("expanded");
+    });
   },
   template: `
-      <div class="container md:flex items-center" style="padding-top: 1rem;">
+      <div class="banner container md:flex items-center" style="padding-top: 1rem;">
           <div class="md:w-1/2">
-            <div class="headline text-center" style="text-align: left;font-size: 48px;line-height: 47px;margin-bottom: 0.5rem;">
+            <div class="headline">
               Wir liefern<br>
               zu dir nach Hause
             </div>
-            <div style="font-size: 24px;margin-bottom: 4rem;">Der Klimafreundliche lokale Lieferdienst</div>
+            <div class="subheadline">Der Klimafreundliche lokale Lieferdienst</div>
             <div class="button btn-l" route="/search">Produkte Suchen</div>
           </div>
           <div class="md:w-1/2 hidden md:block">
@@ -209,7 +219,7 @@ templates[0] = {
 			    <div style="margin-top: 4rem;">
 
             <div class="container" style="margin-top: 4rem;padding: 2rem 1rem;">
-              <div class="headline text-center" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
+              <div class="headline text-center hidden" style="font-size: 48px;line-height: 47px;margin-bottom:3rem;">
                 Das liefern wir                
               </div>
               <div class="home-categories-grid">
@@ -249,9 +259,6 @@ templates[0] = {
                   </div>
                   <div class="text-center" style="margin-top: 1rem;">Und vieles mehr</div>
                 </div>
-              </div>
-              <div class="text-center" style="margin-top: 4rem;">
-                <a>Alle Kategorien anzeigen</a>
               </div>
             </div>
 
