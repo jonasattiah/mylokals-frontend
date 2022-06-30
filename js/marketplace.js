@@ -163,6 +163,7 @@ templates[0] = {
     ]);
 
     function renderCityList(items) {
+      document.getElementById("cities").innerHTML = "";
       items.forEach((item) => {
         const template = `
               <input name="city" value="${item.key}" type="radio">
@@ -185,6 +186,10 @@ templates[0] = {
         document.getElementById("cities").appendChild(el);
       });
     }
+    document.getElementById("change-location").addEventListener("click", () => {
+      renderCityList(availableCities);
+      document.getElementById("citySearch").style.display = "block";
+    });
     if (!getCookie("cuCity")) {
       document.getElementById("citySearch").style.display = "block";
       renderCityList(availableCities);
@@ -210,7 +215,7 @@ templates[0] = {
             <div class="button btn-l" route="/search">Produkte Suchen</div>
           </div>
           <div class="md:w-1/2 hidden md:block">
-    				<div class="banner" style="display: flex;align-items: center;justify-content: center;">
+    				<div style="display: flex;align-items: center;justify-content: center;border-radius: 12px;width: 100%;height: 400px;">
               <div class="" id='map' style='width: 100%; height: 100%;border-radius: 6px;'></div>
             </div>
           </div>

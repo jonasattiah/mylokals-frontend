@@ -12,7 +12,10 @@
   <body>
     <div class="app" id="app">
       <div class="navigation">
-        <div class="flex" style="margin-bottom: 1rem; padding: 0 1rem">
+        <div
+          class="flex items-center"
+          style="margin-bottom: 1rem; padding: 0 1rem"
+        >
           <a class="hidden md:block md:w-1/3">
             <div
               class="logo"
@@ -46,7 +49,29 @@
                 />
                 <div class="dropdown hidden" id="dropdown">
                   <div class="dropdown-body">
-                    <ul class="nav flex navCategories"></ul>
+                    <div
+                      style="
+                        padding: 0 1rem;
+                        border: 1px solid #e0e8f0;
+                        border-radius: 6px;
+                        height: 50px;
+                        line-height: 50px;
+                        display: flex;
+                        align-items: center;
+                      "
+                      id="change-location"
+                    >
+                      <img
+                        src="https://cdn-icons.flaticon.com/png/512/2508/premium/2508521.png?token=exp=1656549682~hmac=c7bf786465decc77dd889f9c21419d2d"
+                        style="height: 18px; margin-right: 0.5rem"
+                      />
+                      Standort: Grevenbroich
+                      <a style="margin-left: 0.25rem">ändern</a>
+                    </div>
+                    <ul
+                      class="nav flex navCategories"
+                      style="margin-top: 1rem"
+                    ></ul>
                   </div>
                 </div>
               </div>
