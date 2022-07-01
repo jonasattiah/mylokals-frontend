@@ -19,7 +19,7 @@ let stripe = {
     });
   },
   initStripeCard: (clientToken, publicKey) => {
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       stripe.isSdkLoaded = false;
 
       const style = {
@@ -268,7 +268,7 @@ const checkoutView = {
     };
 
     const renderDeliveryOptions = (items) => {
-      const selected = items.find(item => item.selected)
+      const selected = items.find((item) => item.selected);
       items.forEach((item) => {
         const template = `
         <input name="deliveryOption" value="${item.key}" type="radio">
@@ -310,7 +310,8 @@ const checkoutView = {
       });
 
       document.getElementsByName("deliveryOption").forEach((option) => {
-        if (selected.key !== option.value) option.parentElement.style.display = "none";
+        if (selected.key !== option.value)
+          option.parentElement.style.display = "none";
       });
     };
 
@@ -379,6 +380,15 @@ const checkoutView = {
             }
             document.getElementById("order-total").innerHTML =
               res.data.order_total;
+            if (res.data.shippingCosts) {
+              document
+                .getElementById("shipping-costs")
+                .querySelector(".shipping-costs").innerHTML =
+                res.data._shippingCosts;
+              document
+                .getElementById("shipping-costs")
+                .classList.remove("hidden");
+            }
             setPaymentMethod(
               res.data.paymentMethod,
               res.data.payment.initialization_data
@@ -875,13 +885,23 @@ const checkoutView = {
 								-->
 
 								<div class="text-right" style="margin-top: 2rem;">
+                  <div class="hidden" style="font-size: 14px;" id="shipping-costs">
+                    <span class="mt-4" style="margin-right: .25rem;">${window.$t(
+                      "view.checkout.order.shippingCosts"
+                    )}</span>
+                    <span class="mt-4 text-right">
+                      <span class="shipping-costs" style="font-weight: 600;">
+                        
+                      </span>
+                    </span>
+                  </div>
 									<div>
 										<span class="mt-4" style="margin-right: .25rem;">${window.$t(
                       "view.checkout.order.total"
                     )}</span>
 										<span class="mt-4 text-right">
 											<span style="font-weight: 600;" id="order-total">
-												<skeleton style="width: 88px;height:22px;border-radius: 4px;background: #fafafa;display: block;"></skeleton>
+												
 											</span>
 										</span>
 									</div>

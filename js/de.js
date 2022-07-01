@@ -235,7 +235,7 @@ const json = {
   "view.checkout.payment.headline": "Zahlungsart",
   "view.checkout.shippingOption.headline": "Lieferung",
   "view.checkout.basket.headline": "Deine Artikel",
-  "view.checkout.order.shippingCosts": "Versandkosten",
+  "view.checkout.order.shippingCosts": "Lieferkosten",
   "view.checkout.order.incVat": "inkl. MwSt",
   "view.checkout.order.total": "Gesamt",
   "view.checkout.submitOrder.button": "Kostenpfichtig Bestellen",
