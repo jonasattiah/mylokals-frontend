@@ -329,6 +329,9 @@ button:disabled {
 .bskt-items .prdct-itm {
   display: flex;
 }
+.bskt-items .item {
+  margin-bottom: 0.25rem;
+}
 .bskt-items .prdct-itm_img {
   width: 64px;
   height: 64px;
@@ -339,7 +342,7 @@ button:disabled {
   margin-left: 0.5rem;
 }
 .bskt-items .button {
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 .cookies {
   background: #000;

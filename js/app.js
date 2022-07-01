@@ -274,9 +274,9 @@ function renderBasketItems(items, targetId) {
                   </div>
                   <div class="prdct-itm-details">
                     <div>${item.variant.name}</div>
-                    <div>${item.quantity > 1 ? item.quantity + " x " : ""} ${
-      item.variant._priceWithTax
-    }</div>
+                    <div style="font-size: 14px;">${
+                      item.quantity > 1 ? item.quantity + " x " : ""
+                    } ${item.variant._priceWithTax}</div>
                     <div class="button btn-gray btn-xs basket-item-remove">${window.$t(
                       "component.basket.item.remove"
                     )}</div>
