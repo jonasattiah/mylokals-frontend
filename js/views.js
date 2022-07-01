@@ -84,63 +84,6 @@ const templates = [
     `,
   },
   {
-    name: "store",
-    init: () => {
-      categoryApi
-        .fetchCategory("lebensmittel", {
-          limit: 100,
-        })
-        .then((res) => {
-          renderItems("items", res.data.products);
-        });
-
-      const renderSidebarItems = (items) => {
-        items.forEach((item) => {
-          const template = `<a class="" route="/kategorie/${item.key}">${item.name}</a>`;
-          let component = document.createElement("li");
-          component.innerHTML = template;
-          component.classList.add("item");
-
-          document.getElementById("categoriesSidebar").appendChild(component);
-        });
-      };
-
-      categoryApi.fetchCategories().then((res) => {
-        renderSidebarItems(res.data.categories);
-      });
-    },
-    template: `
-            <div class="container">
-              <div class="flex">
-                <div class="store-list-item" style="width:100%;max-width: 500px;">
-                  <div class="flex" style="height: 0px; padding-bottom: 64%; position: relative;" route="/store">
-                    <div class="mb-1 flex-none relative flex items-center justify-center" style="border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset; position: absolute; top: 0px; left: 0px; overflow: hidden;">
-                      <div class="store-card-banner" style="background: url('https://api.mylokals.de/api/v1/images/61420a26fa66d79da38ad6eb/2021-09-15/8da745f45e31c1b0efddbb6a5969551fd62bb2aef4776ad9.jpeg?height=216&size=2') center center / cover rgb(255, 255, 255); border-radius: 4px; height: 100%; width: 100%; box-shadow: rgb(136, 136, 136) 0px 0px 1px inset;"></div>
-                    </div>
-                  </div>
-                </div>
-                <div style="margin-left: 1rem;">
-                  <div class="headline" style="margin-bottom: .5rem;">Becker Obst und Gemüse</div>
-                  <div>Obst, Gemüse</div>
-                </div>
-              </div>
-
-              <div class="md:flex" style="margin-top: 4rem;">
-                <ul class="hidden" id="categoriesSidebar" style="max-width: 200px;width: 100%;padding-right: 1rem;"></ul>
-                <div class="w-full">
-                  <div class="w-full" style="margin-bottom: 1rem;">
-                    <div class="form-field form-field-search">
-                      <input class="form-field-input" name="search" id="search" placeholder="Suche">
-                      <img class="search-icon" src="https://cdn.purdia.com/mylokals/icons/search.svg">
-                    </div>
-                  </div>
-                  <div class="prdcts mt-20 view-transition" id="items"></div>
-                </div>
-              </div>
-            </div>
-        `,
-  },
-  {
     name: "category",
     init: () => {
       return new Promise((resolve) => {
