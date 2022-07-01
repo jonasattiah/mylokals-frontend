@@ -257,7 +257,8 @@ function renderItems(targetId, items) {
     document.getElementById(targetId).appendChild(component);
     component
       .querySelector(".prdct-itm_cart-btn")
-      .addEventListener("click", () => {
+      .addEventListener("click", (e) => {
+        e.stopPropagation();
         basketApi.addItem(item.available_variants[0].id, 1);
       });
     linkListener();

@@ -299,7 +299,8 @@ const templates = [
 
           document.getElementById("product").appendChild(el);
 
-          document.getElementById("addItem").addEventListener("click", () => {
+          document.getElementById("addItem").addEventListener("click", (e) => {
+            e.stopPropagation();
             basketApi.addItem(product.available_variants[0].id, 1);
           });
         }
