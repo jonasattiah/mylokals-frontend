@@ -59,6 +59,79 @@ const renderLocationChangeModal = () => {
   });
 };
 renderLocationChangeModal();
+const initMap = (targetId, center = [0, 0], zoom = 12) => {
+  mapboxgl.accessToken =
+    "pk.eyJ1Ijoiam9lbmFzam8iLCJhIjoiY2o2M3k2NW96MWdpcTJybndtbmQ2aWtpYyJ9.9f0O8JplL4G6An4-ci8dQw";
+  const map = new mapboxgl.Map({
+    container: targetId,
+    style: "mapbox://styles/joenasjo/cjyfyl58q00rh1cs2gvz12lfn",
+    center: center.reverse(),
+    zoom,
+  });
+  window.map = map;
+};
+const addMarkers = (markers) => {
+  markers.reverse().forEach((marker) => {
+    if (!document.getElementById("map_marker_" + marker.id)) {
+      if (
+        marker.coordinates &&
+        typeof marker.coordinates[0] === "number" &&
+        typeof marker.coordinates[1] === "number"
+      ) {
+        const el_wrapper = document.createElement("div");
+        el_wrapper.className = "marker-wrapper";
+        el_wrapper.setAttribute("id", "map_marker_" + marker.id);
+
+        const el_marker = document.createElement("div");
+        el_marker.className = [
+          "marker",
+          !marker.approved && markers.length > 30 ? "marker--secondary" : "",
+          `marker--${marker.type}`,
+        ].join(" ");
+
+        const el_icon = document.createElement("div");
+        el_icon.className = "marker-icon";
+        el_marker.appendChild(el_icon);
+
+        el_wrapper.appendChild(el_marker);
+
+        const store_banner = document.createElement("img");
+        store_banner.className = "marker-store-preview-banner";
+        store_banner.src = marker.preview_image_url;
+
+        const store_name = document.createElement("div");
+        store_name.className = "headline headline--xs";
+        store_name.src = marker.preview_image_url;
+        const store_name_text = document.createTextNode(marker.name);
+        store_name.appendChild(store_name_text);
+
+        const store_preview = document.createElement("div");
+        store_preview.className = "marker-store-preview";
+        store_preview.appendChild(store_banner);
+        store_preview.appendChild(store_name);
+        store_preview.addEventListener("click", () => {
+          //vm.$router.push({name:'store',params:{store_id:marker.key},query:{...vm.$route.query,map:null}})
+        });
+
+        el_wrapper.appendChild(store_preview);
+
+        function clickMarker(event) {
+          // document.getElementById('map_marker_' + marker.id).classList.add("is-active")
+          // vm.$emit('update', {
+          //   id: marker.id,
+          //   type: marker.type,
+          //   coordinates: marker.coordinates
+          // })
+        }
+        el_wrapper.addEventListener("click", clickMarker);
+        const new_marker = new mapboxgl.Marker(el_wrapper)
+          .setLngLat(marker.coordinates)
+          .addTo(window.map);
+        //vm.markers_on_map.push(new_marker)
+      }
+    }
+  });
+};
 
 function renderCityList(items) {
   document.getElementById("cities").innerHTML = "";
@@ -96,82 +169,7 @@ if (!getCookie("cuCity")) {
 templates[0] = {
   name: "index",
   init: () => {
-    const addMarkers = (markers) => {
-      markers.reverse().forEach((marker) => {
-        if (!document.getElementById("map_marker_" + marker.id)) {
-          if (
-            marker.coordinates &&
-            typeof marker.coordinates[0] === "number" &&
-            typeof marker.coordinates[1] === "number"
-          ) {
-            const el_wrapper = document.createElement("div");
-            el_wrapper.className = "marker-wrapper";
-            el_wrapper.setAttribute("id", "map_marker_" + marker.id);
-
-            const el_marker = document.createElement("div");
-            el_marker.className = [
-              "marker",
-              !marker.approved && markers.length > 30
-                ? "marker--secondary"
-                : "",
-              `marker--${marker.type}`,
-            ].join(" ");
-
-            const el_icon = document.createElement("div");
-            el_icon.className = "marker-icon";
-            el_marker.appendChild(el_icon);
-
-            el_wrapper.appendChild(el_marker);
-
-            const store_banner = document.createElement("img");
-            store_banner.className = "marker-store-preview-banner";
-            store_banner.src = marker.preview_image_url;
-
-            const store_name = document.createElement("div");
-            store_name.className = "headline headline--xs";
-            store_name.src = marker.preview_image_url;
-            const store_name_text = document.createTextNode(marker.name);
-            store_name.appendChild(store_name_text);
-
-            const store_preview = document.createElement("div");
-            store_preview.className = "marker-store-preview";
-            store_preview.appendChild(store_banner);
-            store_preview.appendChild(store_name);
-            store_preview.addEventListener("click", () => {
-              //vm.$router.push({name:'store',params:{store_id:marker.key},query:{...vm.$route.query,map:null}})
-            });
-
-            el_wrapper.appendChild(store_preview);
-
-            function clickMarker(event) {
-              // document.getElementById('map_marker_' + marker.id).classList.add("is-active")
-              // vm.$emit('update', {
-              //   id: marker.id,
-              //   type: marker.type,
-              //   coordinates: marker.coordinates
-              // })
-            }
-
-            el_wrapper.addEventListener("click", clickMarker);
-
-            const new_marker = new mapboxgl.Marker(el_wrapper)
-              .setLngLat(marker.coordinates)
-              .addTo(window.map);
-            //vm.markers_on_map.push(new_marker)
-          }
-        }
-      });
-    };
-
-    mapboxgl.accessToken =
-      "pk.eyJ1Ijoiam9lbmFzam8iLCJhIjoiY2o2M3k2NW96MWdpcTJybndtbmQ2aWtpYyJ9.9f0O8JplL4G6An4-ci8dQw";
-    const map = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/joenasjo/cjyfyl58q00rh1cs2gvz12lfn",
-      center: currentCity.coordinates,
-      zoom: 12,
-    });
-    window.map = map;
+    initMap("map", currentCity.coordinates);
 
     function renderStores(targetId, items) {
       if (!items.length) {
@@ -219,15 +217,15 @@ templates[0] = {
     addMarkers([
       {
         id: 1,
-        coordinates: [6.576801, 51.165982],
+        coordinates: [51.165982, 6.576801],
       },
       {
         id: 2,
-        coordinates: [6.578233, 51.165589],
+        coordinates: [51.165589, 6.578233],
       },
       {
         id: 3,
-        coordinates: [6.513069, 51.190269],
+        coordinates: [51.190269, 6.513069],
       },
     ]);
   },
@@ -316,6 +314,10 @@ templates[0] = {
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div class="flex justify-center">
+              <div class="button btn-l" route="/search">Händler werden</div>
             </div>
 			    </div>
 				`,

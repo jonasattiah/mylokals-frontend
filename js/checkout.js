@@ -116,6 +116,8 @@ const checkoutView = {
     const elErrors = document.getElementById("checkout-errors");
     const elPaymentErrors = document.getElementById("payment-errors");
     const elLoginBtn = document.getElementById("login-btn");
+    const elCheckoutCard = document.getElementById("checkoutCard");
+    const elBasket = document.getElementById("basketItems");
     const loading = (isLoading) => {
       const elFormFields = document.querySelectorAll(
         `#checkout-form .form-field-input`
@@ -265,6 +267,48 @@ const checkoutView = {
       });
     };
 
+    const renderDeliveryOptions = (items) => {
+      items.forEach((item) => {
+        const template = `
+        <input name="deliveryOption" value="${item.key}" type="radio">
+        <img src="https://cdn.purdia.com/assets/icons/default/basket.svg" style="height:24px;margin-right:1rem;">
+        <div class="mt-4" style="font-weight: 600;line-height: 24px;">
+          ${item.name}
+          <div style="color: #1e5ac5;">${item.description}</div>
+          <div style="font-size:14px;line-height: 14px;">${item.price}</div>
+        </div>
+        `;
+
+        let el = document.createElement("label");
+        el.innerHTML = template;
+        el.className = "list-item list-item-l hover";
+        if (item.selected) {
+          el.querySelector("input").checked = true;
+          el.classList.add("active");
+        }
+        el.addEventListener("change", () => {
+          document.getElementsByName("deliveryOption").forEach((option) => {
+            if (el !== option.parentElement) {
+              option.parentElement.style.display = "none";
+            }
+          });
+          elCheckoutCard.classList.remove("hidden");
+          elBasket.classList.remove("hidden");
+          api("v1/order/shipping", {
+            method: "PUT",
+            headers: {
+              "order-session-id": window.$store.order.id,
+            },
+            body: {
+              shippingOptionKey: item.key,
+            },
+          }).then((res) => {});
+        });
+
+        document.getElementById("deliveryOptions").appendChild(el);
+      });
+    };
+
     const fetchCheckout = () => {
       new Promise((resolve) => {
         api("v1/checkout/" + window.$store.order.id, {
@@ -304,7 +348,8 @@ const checkoutView = {
             }
             renderPaymentMethods(res.data.payment_methods);
             renderShippingMethods(res.data.shippingMethods);
-            if (res.data.itemPickUpLocations.length) {
+            renderDeliveryOptions(res.data.shippingMethods);
+            if (res.data.itemPickUpLocations.length && false) {
               initMap(
                 "map",
                 [
@@ -321,6 +366,11 @@ const checkoutView = {
                   }))
                 );
               }, 500);
+            }
+            if (res.data.deliveryOption) {
+              elCheckoutCard.classList.remove("hidden");
+            } else {
+              elBasket.classList.add("hidden");
             }
             document.getElementById("order-total").innerHTML =
               res.data.order_total;
@@ -679,29 +729,35 @@ const checkoutView = {
         window.location.reload();
       });
     });
+
+    // renderDeliveryOptions([
+    //   {
+    //     key: 'pickUp',
+    //     name: "Selber abholen (2km entfernt)",
+    //     description: "100% CO2 sparen",
+    //     price: "Kostenlos"
+    //   },
+    //   {
+    //     key: 'delivery',
+    //     name: "Lieferung",
+    //     description: "Heute 17:00 - 19:00 Uhr",
+    //     price: "1,99 €"
+    //   },
+    //   {
+    //     key: 'primeDelivery',
+    //     name: "Premium Lieferung",
+    //     description: "ca. 30 min.",
+    //     price: "6,99 €"
+    //   },
+    // ])
   },
   template: `
 				    <div class="checkout-view md:block" id="checkout">
-            <div class="map" id="map" style="max-width: 600px;margin-bottom: 1rem;"></div>
-            <ul class="list" style="max-width: 600px;position:relative;margin-bottom: .5rem;">
-              <label class="list-item">
-                <input name="city" value="" type="radio">
-                <img src="https://cdn.purdia.com/assets/icons/default/basket.svg" style="height:24px;margin-right:1rem;">
-                <span class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;line-height: 24px;">
-                  Selber abholen
-                </span>
-                <span style="color: #53c51e;">100% CO2 sparen</span>
-              </label>
-              <label class="list-item">
-                <input name="city" value="" type="radio">
-                <img src="https://cdn-icons-png.flaticon.com/512/7791/7791605.png" style="height:24px;margin-right:1rem;">
-                <span class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;line-height: 24px;">
-                  Lieferung
-                </span>
-                <span style="color: #1e5ac5;">Heute 17:00 - 19:00 Uhr</span>
-              </label>
-            </ul>
-						<div class="card p-3 hidden" style="max-width: 600px;position:relative;">
+            <!-- Modul:Start -->
+            <!--<div class="map" id="map" style="max-width: 600px;margin-bottom: 1rem;"></div>-->
+            <ul class="list" style="max-width: 600px;position:relative;margin-bottom: 1rem;" id="deliveryOptions"></ul>
+            <!-- Modul:End -->
+						<div class="card p-3 hidden" style="max-width: 600px;position:relative;" id="checkoutCard">
               <div class="button btn-gray" style="margin-bottom: 1rem;width:100%;" id="login-btn">Login</div>
               <div id="login-form"></div>
 							<form id="checkout-form" action="javascript:;" autocomplete="on" novalidate>

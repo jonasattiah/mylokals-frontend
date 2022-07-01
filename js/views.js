@@ -328,7 +328,7 @@ const templates = [
     init: () => {
       const fetchBasket = () => {
         basketApi.fetchBasket().then((basket) => {
-          renderBasketItems(basket.items, "items");
+          renderBasketItems(basket.items, "basketItems");
           if (!basket.items.length) {
             document.getElementById("toCheckoutButton").style.display = "none";
           }
@@ -336,7 +336,7 @@ const templates = [
       };
 
       if (window.$store.basket.items) {
-        renderBasketItems(window.$store.basket.items, "items");
+        renderBasketItems(window.$store.basket.items, "basketItems");
         fetchBasket();
       } else {
         fetchBasket();
@@ -362,7 +362,7 @@ const templates = [
 					    		<div id="checkoutView"></div>
 					    	</div>
 					    	<div class="md:w-1/2">
-					    		<div class="bskt-items mt-20" id="items" style="margin-bottom: 1rem;"></div>
+					    		<div class="bskt-items mt-20" id="basketItems" style="margin-bottom: 1rem;"></div>
 					    		<a class="button w-full" route="/kasse" id="toCheckoutButton">${window.$t(
                     "view.basket.button"
                   )}</a>

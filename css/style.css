@@ -393,6 +393,17 @@ button:disabled {
 .list-item:last-child {
   margin: 0;
 }
+.list-item-l {
+  height: 96px;
+  display: flex;
+  align-items: center;
+}
+.list-item input[type="radio"] {
+  margin: 0 0.75rem 0 0.5rem;
+}
+.list-item.hover:hover {
+  background: #dfe8f0;
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
