@@ -127,8 +127,8 @@ const templates = [
 
               <div class="md:flex" style="margin-top: 4rem;">
                 <ul class="hidden" id="categoriesSidebar" style="max-width: 200px;width: 100%;padding-right: 1rem;"></ul>
-                <div>
-                  <div class="w-2/3 md:w-1/2" style="margin-bottom: 1rem;">
+                <div class="w-full">
+                  <div class="w-full" style="margin-bottom: 1rem;">
                     <div class="form-field form-field-search">
                       <input class="form-field-input" name="search" id="search" placeholder="Suche">
                       <img class="search-icon" src="https://cdn.purdia.com/mylokals/icons/search.svg">
