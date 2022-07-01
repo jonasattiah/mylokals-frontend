@@ -382,14 +382,19 @@ button:disabled {
 }
 .list {
 }
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
 .list-item {
   padding: 0 1rem;
   border: 1px solid #e0e8f0;
   border-radius: 6px;
-  height: 50px;
-  line-height: 50px;
+  min-height: 50px;
   margin-bottom: 0.5rem;
   display: list-item;
+  overflow: hidden;
 }
 .list-item:last-child {
   margin: 0;
@@ -404,6 +409,7 @@ button:disabled {
 }
 .list-item.hover:hover {
   background: #dfe8f0;
+  cursor: pointer;
 }
 @keyframes fadeIn {
   0% {
@@ -467,6 +473,20 @@ button:disabled {
   height: 256px;
   border-radius: 6px;
   pointer-events: none;
+}
+.list-payment .list-item {
+  height: 56px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+.list-payment .list-item input[type="radio"] {
+  margin: 0;
+  margin-right: 0.75rem;
+}
+.list-payment .list-item img {
+  margin-right: 0.5rem;
 }
 .form-card-select {
   display: grid;
@@ -683,6 +703,9 @@ div#card-element {
   }
   .home-categories-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .list-payment {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .footer {
     padding: 16rem 0 8rem;

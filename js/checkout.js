@@ -188,6 +188,7 @@ const checkoutView = {
 					      `;
 
         let el = document.createElement("label");
+        el.className = "list-item hover";
         el.innerHTML = template;
         if (item.selected) {
           el.querySelector("input").checked = true;
@@ -864,7 +865,7 @@ const checkoutView = {
 								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;margin-top: 1rem">${window.$t(
                   "view.checkout.payment.headline"
                 )}</div>
-								<div class="form-card-select mt-4" id="payment"></div>
+								<ul class="list-grid list-payment" id="payment"></ul>
 								<div id="card-element" style="display:none;"></div>
                 <div class="error-message" id="payment-errors" style="margin-top: 0.25rem;"></div>
 
