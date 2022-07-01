@@ -484,6 +484,7 @@ button:disabled {
 .list-payment .list-item input[type="radio"] {
   margin: 0;
   margin-right: 0.75rem;
+  cursor: pointer;
 }
 .list-payment .list-item img {
   margin-right: 0.5rem;
@@ -518,11 +519,11 @@ div#card-element {
   border: 1px solid #e1e8f0;
   height: 42px;
   border-radius: 6px;
-  background: #fff;
+  background: #e0e8f0;
   width: 100%;
   display: inline-block;
   padding: 12px 0.65rem;
-  font-weight: 600;
+  font-size: 14px;
   margin-top: 0.5rem;
 }
 .form-field {
