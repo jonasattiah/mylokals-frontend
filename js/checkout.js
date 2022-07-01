@@ -19,7 +19,7 @@ let stripe = {
     });
   },
   initStripeCard: (clientToken, publicKey) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => { 
       stripe.isSdkLoaded = false;
 
       const style = {
@@ -268,6 +268,7 @@ const checkoutView = {
     };
 
     const renderDeliveryOptions = (items) => {
+      const selected = items.find(item => item.selected)
       items.forEach((item) => {
         const template = `
         <input name="deliveryOption" value="${item.key}" type="radio">
@@ -306,6 +307,10 @@ const checkoutView = {
         });
 
         document.getElementById("deliveryOptions").appendChild(el);
+      });
+
+      document.getElementsByName("deliveryOption").forEach((option) => {
+        if (selected.key !== option.value) option.parentElement.style.display = "none";
       });
     };
 
