@@ -304,6 +304,24 @@ const checkoutView = {
             }
             renderPaymentMethods(res.data.payment_methods);
             renderShippingMethods(res.data.shippingMethods);
+            if (res.data.itemPickUpLocations.length) {
+              initMap(
+                "map",
+                [
+                  res.data.itemPickUpLocations[0].coordinates.lat,
+                  res.data.itemPickUpLocations[0].coordinates.lng,
+                ],
+                10
+              );
+              setTimeout(() => {
+                addMarkers(
+                  res.data.itemPickUpLocations.map((item) => ({
+                    ...item,
+                    coordinates: [item.coordinates.lng, item.coordinates.lat],
+                  }))
+                );
+              }, 500);
+            }
             document.getElementById("order-total").innerHTML =
               res.data.order_total;
             setPaymentMethod(
@@ -664,16 +682,26 @@ const checkoutView = {
   },
   template: `
 				    <div class="checkout-view md:block" id="checkout">
-            <div class="card p-3" style="max-width: 600px;position:relative;margin-bottom: .5rem;display:flex;">
-              <img src="https://cdn-icons-png.flaticon.com/512/7791/7791605.png" style="height:24px;margin-right:1rem;">
-              <div>
-                <div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;line-height: 24px;">
+            <div class="map" id="map" style="max-width: 600px;margin-bottom: 1rem;"></div>
+            <ul class="list" style="max-width: 600px;position:relative;margin-bottom: .5rem;">
+              <label class="list-item">
+                <input name="city" value="" type="radio">
+                <img src="https://cdn.purdia.com/assets/icons/default/basket.svg" style="height:24px;margin-right:1rem;">
+                <span class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;line-height: 24px;">
+                  Selber abholen
+                </span>
+                <span style="color: #53c51e;">100% CO2 sparen</span>
+              </label>
+              <label class="list-item">
+                <input name="city" value="" type="radio">
+                <img src="https://cdn-icons-png.flaticon.com/512/7791/7791605.png" style="height:24px;margin-right:1rem;">
+                <span class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;line-height: 24px;">
                   Lieferung
-                </div>
-                <div style="color: #1e5ac5;">Heute 17:00 - 19:00 Uhr</div>
-              </div>
-            </div>
-						<div class="card p-3" style="max-width: 600px;position:relative;">
+                </span>
+                <span style="color: #1e5ac5;">Heute 17:00 - 19:00 Uhr</span>
+              </label>
+            </ul>
+						<div class="card p-3 hidden" style="max-width: 600px;position:relative;">
               <div class="button btn-gray" style="margin-bottom: 1rem;width:100%;" id="login-btn">Login</div>
               <div id="login-form"></div>
 							<form id="checkout-form" action="javascript:;" autocomplete="on" novalidate>
@@ -774,6 +802,7 @@ const checkoutView = {
                 )}</div>
 								<div class="form-card-select form-field" id="shipping"></div>
                 <div class="error-message" id="shipping-error"></div>
+                
 								<!--
 								<div class="mt-4">
 									<label>

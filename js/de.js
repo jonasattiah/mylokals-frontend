@@ -233,7 +233,7 @@ const json = {
   "view.checkout.address.createCustomer": "Account erstellen",
   "view.checkout.address.headline": "Adresse",
   "view.checkout.payment.headline": "Zahlungsart",
-  "view.checkout.shippingOption.headline": "Versand",
+  "view.checkout.shippingOption.headline": "Lieferung",
   "view.checkout.basket.headline": "Deine Artikel",
   "view.checkout.order.shippingCosts": "Versandkosten",
   "view.checkout.order.incVat": "inkl. MwSt",

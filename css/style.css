@@ -451,6 +451,11 @@ button:disabled {
   text-overflow: ellipsis;
   font-size: 12px;
 }
+.checkout-view .map {
+  height: 256px;
+  border-radius: 6px;
+  pointer-events: none;
+}
 .form-card-select {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
