@@ -3,17 +3,17 @@ const availableCities = [
   {
     name: "Grevenbroich",
     key: "grevenbroich",
-    coordinates: [6.583, 51.09],
+    coordinates: [51.09, 6.583],
   },
   {
     name: "Korschenbroich",
     key: "korschenbroich",
-    coordinates: [6.5535597, 51.1854975],
+    coordinates: [51.1854975, 6.5535597],
   },
   {
     name: "Neuss",
     key: "neuss",
-    coordinates: [6.6715195, 51.1761706],
+    coordinates: [51.1761706, 6.6715195],
   },
   {
     name: "In ganz Deutschland suchen",
