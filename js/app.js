@@ -245,8 +245,8 @@ function renderItems(targetId, items) {
                     <img src="https://cdn.purdia.com/assets/icons/default/basket-add.svg" style="height:16px;width:16px;">
                   </a>
 				    		</div>
-				    		<div>${item.name}</div>
-				    		<div>${item._priceWithTax}</div>
+				    		<div style="max-height: 40px;overflow: hidden;">${item.name}</div>
+				    		<div style="font-size: 15px;">${item._priceWithTax}</div>
 				    	</div>
 				      `;
 
@@ -273,8 +273,10 @@ function renderBasketItems(items, targetId) {
                     <img src="${item.image_url}?height=330&width=310&size=1"/>
                   </div>
                   <div class="prdct-itm-details">
-                    <div>${item.variant.name}</div>
-                    <div style="font-size: 14px;">${
+                    <div style="max-height: 40px;overflow: hidden;">${
+                      item.variant.name
+                    }</div>
+                    <div style="font-size: 15px;">${
                       item.quantity > 1 ? item.quantity + " x " : ""
                     } ${item.variant._priceWithTax}</div>
                     <div class="button btn-gray btn-xs basket-item-remove">${window.$t(

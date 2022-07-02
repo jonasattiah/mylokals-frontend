@@ -102,8 +102,8 @@ const templates = [
 						    		<div class="prdct-itm_img">
 						    			<img src="${preview_image}?height=330&width=310&size=1"/>
 						    		</div>
-						    		<div>${item.name}</div>
-						    		<div>${item._priceWithTax}</div>
+						    		<div style="max-height: 40px;overflow: hidden;">${item.name}</div>
+						    		<div style="font-size: 15px;">${item._priceWithTax}</div>
 						    		<!--<div class="flex justify-center"><a class="prdct-itm_cart-btn button btn-s" href="https://twitter.com/jonasatia" target="_blank" rel="noopener">Add to cart</a></div>-->
 						    	</div>
 						      `;
