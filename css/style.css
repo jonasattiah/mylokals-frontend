@@ -622,7 +622,7 @@ div#card-element {
 }
 @media (min-width: 768px) {
   :root {
-    --logo_height: 50px;
+    --logo_height: 42px;
   }
   .md\:block {
     display: block;
