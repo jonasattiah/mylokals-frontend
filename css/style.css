@@ -365,7 +365,7 @@ button:disabled {
   left: 0;
   z-index: 50;
   padding: 0.75rem;
-  padding-top: 24rem;
+  padding-top: 8rem;
 }
 .modal-body {
   background: #fff;
@@ -701,6 +701,9 @@ div#card-element {
   }
   .list-payment {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .modal {
+    padding-top: 24rem;
   }
   .footer {
     padding: 16rem 0 8rem;
