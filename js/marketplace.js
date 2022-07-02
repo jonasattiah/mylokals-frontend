@@ -237,7 +237,7 @@ templates[0] = {
               Sofort zu dir
             </div>
             <div class="subheadline">Schneller, Nachhaltiger und Sozialer</div>
-            <div class="button btn-l" route="/search">Produkte Suchen</div>
+            <div class="button btn-l" route="/search?s">Produkte Suchen</div>
           </div>
           <div class="md:w-1/2 hidden md:block">
     				<div style="display: flex;align-items: center;justify-content: center;border-radius: 12px;width: 100%;height: 400px;">
