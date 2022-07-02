@@ -275,6 +275,8 @@ const templates = [
           renderBasketItems(basket.items, "basketItems");
           if (!basket.items.length) {
             document.getElementById("toCheckoutButton").style.display = "none";
+            document.getElementById("basketItems").innerHTML =
+              "Dein Warenkorb ist leer";
           }
         });
       };

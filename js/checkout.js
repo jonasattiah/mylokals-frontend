@@ -336,6 +336,8 @@ const checkoutView = {
           },
         })
           .then((res) => {
+            if (!res.data.items.length)
+              document.getElementById("checkoutView").classList.add("hidden");
             window.$store.order.order = res.data;
             if (res.data.user) {
               elLoginBtn.style.display = "none";

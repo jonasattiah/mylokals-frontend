@@ -170,6 +170,9 @@ const basketApi = {
         window.$store.basket.basket = res.data;
         updateNavBasket(res.data);
         resolve(res.data);
+        if (window.$route.key === "checkout") {
+          if (!res.data.items.length) changeRoute("/basket");
+        }
       });
     });
   },
@@ -207,6 +210,14 @@ const basketApi = {
         window.$store.basket.basket = res.data;
         updateNavBasket(res.data);
         resolve(res);
+        if (window.$route.key === "checkout") {
+          if (!res.data.items.length) changeRoute("/basket");
+        }
+        if (window.$route.key === "basket") {
+          document.getElementById("toCheckoutButton").style.display = "none";
+          document.getElementById("basketItems").innerHTML =
+            "Dein Warenkorb ist leer";
+        }
       });
     });
   },
