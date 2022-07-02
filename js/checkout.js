@@ -790,7 +790,7 @@ const checkoutView = {
             <!--<div class="map" id="map" style="max-width: 600px;margin-bottom: 1rem;"></div>-->
             <div style="position:relative;max-width: 600px;">
               <ul class="list" style="position:relative;margin-bottom: 1rem;" id="deliveryOptions"></ul>
-              <div class="button btn-xs btn-gray" style="position: absolute;z-index: 10;bottom: 0.5rem;right: 0.5rem;font-size: 14px;" id="edit-delivery-option">Liferoption ändern</div>
+              <div class="button btn-xs btn-gray" style="position: absolute;z-index: 10;bottom: 0.5rem;right: 0.5rem;font-size: 14px;" id="edit-delivery-option">Ändern</div>
             </div>
             <!-- Modul:End -->
 						<div class="card p-3 hidden" style="max-width: 600px;position:relative;" id="checkoutCard">
