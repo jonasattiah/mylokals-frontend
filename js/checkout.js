@@ -354,6 +354,12 @@ const checkoutView = {
                 res.data.shipping_address.country;
             }
             renderPaymentMethods(res.data.payment_methods);
+            if (res.data.payment) {
+              setPaymentMethod(
+                res.data.paymentMethod,
+                res.data.payment.initialization_data
+              );
+            }
             renderShippingMethods(res.data.shippingMethods);
             renderDeliveryOptions(res.data.shippingMethods);
             if (res.data.itemPickUpLocations.length && false) {
@@ -390,10 +396,6 @@ const checkoutView = {
                 .getElementById("shipping-costs")
                 .classList.remove("hidden");
             }
-            setPaymentMethod(
-              res.data.paymentMethod,
-              res.data.payment.initialization_data
-            );
           })
           .catch((err) => {
             if ([404, 422].includes(err.status)) {
@@ -786,9 +788,9 @@ const checkoutView = {
 								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem">${window.$t(
                   "view.checkout.shipping.headline"
                 )}</div>		
-								<div class="card-plain" id="storedShippingAddress" style="display:none;">
+								<div class="card-plain" id="storedShippingAddress" style="display:none;font-size: 14px;">
                   <span></span>
-                  <a id="shippingAddressEdit">Ändern</a>
+                  <a id="shippingAddressEdit" style="cursor:pointer;">Ändern</a>
                 </div>
 								<div id="shippingFields">
 								<div class="mt-4 flex form-group">
