@@ -270,6 +270,8 @@ const checkoutView = {
     };
 
     const renderDeliveryOptions = (items) => {
+      const elEditButton = document.getElementById("edit-delivery-option");
+      const elDeliveryOptions = document.getElementsByName("deliveryOption");
       const selected = items.find((item) => item.selected);
       items.forEach((item) => {
         const template = `
@@ -305,15 +307,23 @@ const checkoutView = {
             body: {
               shippingOptionKey: item.key,
             },
-          }).then((res) => {});
+          }).then((res) => {
+            elEditButton.classList.remove("hidden");
+          });
         });
 
         document.getElementById("deliveryOptions").appendChild(el);
       });
 
-      document.getElementsByName("deliveryOption").forEach((option) => {
+      elDeliveryOptions.forEach((option) => {
         if (selected.key !== option.value)
           option.parentElement.style.display = "none";
+      });
+      elEditButton.addEventListener("click", () => {
+        elEditButton.classList.add("hidden");
+        elDeliveryOptions.forEach((option) => {
+          option.parentElement.style.display = "flex";
+        });
       });
     };
 
@@ -778,7 +788,10 @@ const checkoutView = {
             <form id="checkout-form" action="javascript:;" autocomplete="on" novalidate>
             <!-- Modul:Start -->
             <!--<div class="map" id="map" style="max-width: 600px;margin-bottom: 1rem;"></div>-->
-            <ul class="list" style="max-width: 600px;position:relative;margin-bottom: 1rem;" id="deliveryOptions"></ul>
+            <div style="position:relative;max-width: 600px;">
+              <ul class="list" style="position:relative;margin-bottom: 1rem;" id="deliveryOptions"></ul>
+              <div class="button btn-xs btn-gray" style="position: absolute;z-index: 10;bottom: 0.5rem;right: 0.5rem;font-size: 14px;" id="edit-delivery-option">Liferoption ändern</div>
+            </div>
             <!-- Modul:End -->
 						<div class="card p-3 hidden" style="max-width: 600px;position:relative;" id="checkoutCard">
               <div class="button btn-gray" style="margin-bottom: 1rem;width:100%;" id="login-btn">Login</div>
