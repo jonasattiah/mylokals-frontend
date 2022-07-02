@@ -9,7 +9,6 @@
 
   --link_color: #1d5ac5;
 
-  --headline_font: "basiersquare";
   --headline_font-size: 24px;
   --headline_margin: 0 0 1rem 0;
 
@@ -33,25 +32,17 @@
 }
 @font-face {
   font-family: "basiercircle";
-  src: url("https://cdn.purdia.com/assets/fonts/basiercircle-medium-webfont.woff2")
-    format("opentype");
+  src: url("Cera Pro Medium.otf") format("opentype");
   font-weight: 500;
 }
 @font-face {
   font-family: "basiercircle";
-  src: url("https://cdn.purdia.com/assets/fonts/basiercircle-regular-webfont.woff2")
-    format("opentype");
-}
-@font-face {
-  font-family: "basiercircle";
-  src: url("https://cdn.purdia.com/assets/fonts/basiercircle-semibold-webfont.woff2")
-    format("opentype");
+  src: url("Cera Pro Bold.otf") format("opentype");
   font-weight: 600;
 }
 @font-face {
   font-family: "basiersquare";
-  src: url("https://cdn.purdia.com/assets/fonts/basiersquare-bold-webfont.woff2")
-    format("opentype");
+  src: url("Cera Pro Bold.otf") format("opentype");
   font-weight: bold;
 }
 * {
@@ -82,9 +73,9 @@ a {
   min-height: var(--body_min-height);
 }
 .headline {
-  font-family: var(--headline_font);
   font-size: var(--headline_font-size);
   margin: var(--headline_margin);
+  font-weight: 600;
 }
 .button {
   height: var(--button_height);
@@ -138,7 +129,7 @@ button:disabled {
   margin-right: 0.5rem;
   color: #000;
   font-size: 24px;
-  font-family: "basiersquare";
+  font-weight: 600;
 }
 .logo img {
   height: 100%;
@@ -544,7 +535,6 @@ div#card-element {
   width: 100%;
   display: inline-block;
   padding: 0 0.65rem;
-  font-weight: 600;
   line-height: 42px;
   font-size: 15px;
 }
@@ -588,7 +578,6 @@ div#card-element {
   background: rgb(255, 255, 255);
   width: 100%;
   padding: 0.75rem 0.65rem;
-  font-weight: 600;
   display: block;
 }
 .skeleton {

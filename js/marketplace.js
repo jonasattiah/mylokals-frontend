@@ -233,10 +233,10 @@ templates[0] = {
       <div class="banner container md:flex items-center" style="padding-top: 1rem;">
           <div class="md:w-1/2">
             <div class="headline">
-              Wir liefern<br>
-              zu dir nach Hause
+              Wir liefern alles<br>
+              Sofort zu dir
             </div>
-            <div class="subheadline">Der Klimafreundliche lokale Lieferdienst</div>
+            <div class="subheadline">Schneller, Nachhaltiger und Sozialer</div>
             <div class="button btn-l" route="/search">Produkte Suchen</div>
           </div>
           <div class="md:w-1/2 hidden md:block">

@@ -277,8 +277,8 @@ const checkoutView = {
         const template = `
         <input class="form-field-input" name="deliveryOption" value="${item.key}" type="radio">
         <img src="https://cdn.purdia.com/assets/icons/default/basket.svg" style="height:24px;margin-right:1rem;">
-        <div class="mt-4" style="font-weight: 600;line-height: 24px;">
-          ${item.name}
+        <div class="mt-4" style="line-height: 24px;">
+          <div style="font-weight: 600;">${item.name}</div>
           <div style="color: #1e5ac5;">${item.description}</div>
           <div style="font-size:14px;line-height: 14px;">${item.price}</div>
         </div>
