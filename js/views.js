@@ -57,8 +57,8 @@ const templates = [
   {
     name: "search",
     init: () => {
-      categoryApi;
-      searchApi.search(window.$route.query.s).then((res) => {
+      const searchTerm = window.$route.query.s ? window.$route.query.s : ''
+      searchApi.search(searchTerm).then((res) => {
         renderItems("items", res.data.results);
       });
     },
