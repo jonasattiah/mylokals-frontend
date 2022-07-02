@@ -1,3 +1,4 @@
+const isMarketPlace = true;
 let stripe = {
   sdk: null,
   isSdkLoaded: false,
@@ -231,7 +232,7 @@ const checkoutView = {
     const renderShippingMethods = (items) => {
       items.forEach((item) => {
         const template = `
-						  <input class="form-field-input" name="shippingMethods" value="${item.key}" type="radio" required>
+						  <input class="form-field-input" name="deliveryOption" value="${item.key}" type="radio" required>
 						  <span></span>
 					      <img src="https://cdn.purdia.com/assets/icons/default/shipping/${item.key}.svg" alt="${item.key}" height="24px">
 					      <div class="description">${item.name}<span style="margin-left: 0.25rem;color: #757575;">${item._price}</span></div>
@@ -246,7 +247,7 @@ const checkoutView = {
         }
         el.addEventListener("change", () => {
           const elShippingOptions =
-            document.getElementsByName("shippingMethods");
+            document.getElementsByName("deliveryOption");
           for (var i = elShippingOptions.length - 1; i >= 0; i--) {
             elShippingOptions[i].parentElement.classList.remove("active");
           }
@@ -272,7 +273,7 @@ const checkoutView = {
       const selected = items.find((item) => item.selected);
       items.forEach((item) => {
         const template = `
-        <input name="deliveryOption" value="${item.key}" type="radio">
+        <input class="form-field-input" name="deliveryOption" value="${item.key}" type="radio">
         <img src="https://cdn.purdia.com/assets/icons/default/basket.svg" style="height:24px;margin-right:1rem;">
         <div class="mt-4" style="font-weight: 600;line-height: 24px;">
           ${item.name}
@@ -360,8 +361,11 @@ const checkoutView = {
                 res.data.payment.initialization_data
               );
             }
-            renderShippingMethods(res.data.shippingMethods);
-            renderDeliveryOptions(res.data.shippingMethods);
+            if (isMarketPlace) {
+              renderDeliveryOptions(res.data.shippingMethods);
+            } else {
+              renderShippingMethods(res.data.shippingMethods);
+            }
             if (res.data.itemPickUpLocations.length && false) {
               initMap(
                 "map",
@@ -540,7 +544,7 @@ const checkoutView = {
         ).length
       );
 
-      if (validation.items.shippingMethods.validation.valueMissing) {
+      if (validation.items.deliveryOption.validation.valueMissing) {
         document.getElementById("shipping-error").innerHTML =
           "Bitte wähle eine Versandart";
       }
@@ -771,6 +775,7 @@ const checkoutView = {
   },
   template: `
 				    <div class="checkout-view md:block" id="checkout">
+            <form id="checkout-form" action="javascript:;" autocomplete="on" novalidate>
             <!-- Modul:Start -->
             <!--<div class="map" id="map" style="max-width: 600px;margin-bottom: 1rem;"></div>-->
             <ul class="list" style="max-width: 600px;position:relative;margin-bottom: 1rem;" id="deliveryOptions"></ul>
@@ -778,7 +783,7 @@ const checkoutView = {
 						<div class="card p-3 hidden" style="max-width: 600px;position:relative;" id="checkoutCard">
               <div class="button btn-gray" style="margin-bottom: 1rem;width:100%;" id="login-btn">Login</div>
               <div id="login-form"></div>
-							<form id="checkout-form" action="javascript:;" autocomplete="on" novalidate>
+							
 								<!--
 								<div class="items flex overflow" id="items" style="border-radius: 4px;">
 									<skeleton style="width: 100%;height:114px;border-radius: 4px;background: #fff;"></skeleton>
@@ -871,11 +876,16 @@ const checkoutView = {
 								<div id="card-element" style="display:none;"></div>
                 <div class="error-message" id="payment-errors" style="margin-top: 0.25rem;"></div>
 
-								<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;margin-top: 1rem">${window.$t(
-                  "view.checkout.shippingOption.headline"
-                )}</div>
-								<div class="form-card-select form-field" id="shipping"></div>
+                ${
+                  !isMarketPlace
+                    ? `<div class="mt-4" style="font-weight: 600;margin-bottom: 0.5rem;margin-top: 1rem">${window.$t(
+                        "view.checkout.shippingOption.headline"
+                      )}</div>
+                <div class="form-card-select form-field" id="shipping"></div>`
+                    : ""
+                }
                 <div class="error-message" id="shipping-error"></div>
+								
                 
 								<!--
 								<div class="mt-4">
@@ -918,8 +928,9 @@ const checkoutView = {
 										${window.$t("view.checkout.submitOrder.button")}
 									</button>
 								</div>
-							</form>
+							
 						</div>
+            </form>
 					</div>
 				`,
 };
