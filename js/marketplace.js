@@ -169,7 +169,7 @@ if (!getCookie("cuCity")) {
 templates[0] = {
   name: "index",
   init: () => {
-    initMap("map", currentCity.coordinates);
+    // initMap("map", currentCity.coordinates);
 
     function renderStores(targetId, items) {
       if (!items.length) {
@@ -241,7 +241,7 @@ templates[0] = {
           </div>
           <div class="md:w-1/2 hidden md:block">
     				<div style="display: flex;align-items: center;justify-content: center;border-radius: 12px;width: 100%;height: 400px;">
-              <div class="" id='map' style='width: 100%; height: 100%;border-radius: 6px;'></div>
+              <!--<div class="" id='map' style='width: 100%; height: 100%;border-radius: 6px;'></div>-->
             </div>
           </div>
         </div>
