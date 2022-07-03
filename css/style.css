@@ -26,7 +26,7 @@
   --logo_height: 42px;
 
   --navigation_background: transparent;
-  --navigation_padding: 1.5rem 0;
+  --navigation_padding: 0.5rem 0 1.5rem 0;
 
   --product-list-cols: 2;
 }
@@ -195,6 +195,9 @@ button:disabled {
 }
 .flex {
   display: flex;
+}
+.justify-between {
+  justify-content: space-between;
 }
 .justify-center {
   justify-content: center;
@@ -623,6 +626,7 @@ div#card-element {
 @media (min-width: 768px) {
   :root {
     --logo_height: 42px;
+    --navigation_padding: 1.5rem 0;
   }
   .md\:block {
     display: block;

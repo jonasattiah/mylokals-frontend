@@ -90,6 +90,7 @@ const authApi = {
         .then((res) => {
           window.$store.user.user = res.data.user;
           resolve(res);
+          document.getElementById("nav-user").innerHTML = res.data.user.email;
         })
         .catch((err) => {
           removeCookie("accessToken");
