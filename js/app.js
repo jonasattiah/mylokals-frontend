@@ -347,6 +347,15 @@ const renderLoginForm = (targetId, successCallback) => {
   });
   document.getElementById(targetId).appendChild(el);
 };
+const renderLoading = (targetId, status = true) => {
+  if (status) {
+    let component = document.createElement("div");
+    component.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
+    component.classList.add("loader");
+    document.getElementById(targetId).appendChild(component)
+    return component
+  }
+}
 
 window.$route = {};
 const routes = [

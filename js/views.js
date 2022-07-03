@@ -60,8 +60,10 @@ const templates = [
     name: "search",
     init: () => {
       const searchTerm = window.$route.query.s ? window.$route.query.s : "";
+      const loader = renderLoading("items")
       searchApi.search(searchTerm).then((res) => {
         renderItems("items", res.data.results);
+        loader.remove()
       });
     },
     template: `
