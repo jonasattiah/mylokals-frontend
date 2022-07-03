@@ -221,6 +221,7 @@ const templates = [
 							    	<div class="md:w-1/2 prdct-col-right">
 							    		<div class="headline">${product.name}</div>
 							    		<div>${product._priceWithTax}</div>
+                      <div style="margin-top: 1rem;">Schnellste Lieferung <strong>Heute 15:00 Uhr</strong></div>
 							    		<a class="prdct-cart-btn button" id="addItem">${window.$t(
                         "view.product.addToCart"
                       )}</a>
