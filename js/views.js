@@ -12,7 +12,9 @@ const templates = [
       });
     },
     template: `
-				    <div class="md:w-1/3 mx-auto" id="login-form"></div>
+        <div class="container">
+				  <div class="md:w-1/3 mx-auto" id="login-form"></div>
+        </div>
 				`,
   },
   {
@@ -43,7 +45,7 @@ const templates = [
       });
     },
     template: `
-				    <div>
+				    <div class="container">
 				    	<div class="md:w-1/2">
 				    		<div class="headline">Account</div>
 				    		<div class="card">
