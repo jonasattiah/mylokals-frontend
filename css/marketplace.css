@@ -194,6 +194,10 @@
   margin-bottom: 4rem;
 }
 
+.list-locations .list-item {
+  line-height: 50px;
+}
+
 @media (min-width: 768px) {
   .form-field-search .form-field-input {
     height: 50px;

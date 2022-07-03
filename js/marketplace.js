@@ -42,7 +42,7 @@ const renderLocationChangeModal = () => {
                     src="https://cdn.purdia.com/mylokals/icons/search.svg"
                   />
                 </div>
-                <ul class="list" style="margin-top: 1rem;" id="cities"></ul>
+                <ul class="list list-locations" style="margin-top: 1rem;" id="cities"></ul>
             </div>
           </div>`;
   el.innerHTML = template;
@@ -142,7 +142,7 @@ function renderCityList(items) {
               `;
 
     let el = document.createElement("label");
-    el.className = "list-item";
+    el.className = "list-item hover";
     el.innerHTML = template;
     if (item.selected) {
       el.querySelector("input").checked = true;
