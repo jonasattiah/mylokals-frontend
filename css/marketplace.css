@@ -129,17 +129,17 @@
   justify-content: end;
   margin: 0;
 }
-.floating-basket .prdct-itm_img {
+.list-items .prdct-itm_img {
   width: 96px;
   height: 96px;
   padding: 0;
   flex: none;
 }
-.floating-basket .prdct-itm {
+.list-items .prdct-itm {
   display: flex;
   margin-bottom: 0.5rem;
 }
-.floating-basket .prdct-itm-details {
+.list-items .prdct-itm-details {
   margin-left: 0.5rem;
 }
 .basket-item-remove {

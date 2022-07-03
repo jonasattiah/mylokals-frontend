@@ -60,10 +60,10 @@ const templates = [
     name: "search",
     init: () => {
       const searchTerm = window.$route.query.s ? window.$route.query.s : "";
-      const loader = renderLoading("items")
+      const loader = renderLoading("items");
       searchApi.search(searchTerm).then((res) => {
         renderItems("items", res.data.results);
-        loader.remove()
+        loader.remove();
       });
     },
     template: `
@@ -375,7 +375,7 @@ const templates = [
                   Lieferung
                   <div style="color: #1e5ac5;">Heute zwischen 17:00 - 19:00 Uhr</div>
                 </div>
-                <div id="items" style="margin-top: 2rem;"></div>
+                <div class="list-items" id="items" style="margin-top: 2rem;"></div>
               </div>
             </div>
 
